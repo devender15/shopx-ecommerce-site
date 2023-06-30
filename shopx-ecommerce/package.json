@@ -15,7 +15,13 @@
     "sanity"
   ],
   "dependencies": {
+    "@sanity/base": "^2.36.1",
     "@sanity/vision": "^3.13.0",
+    "autoprefixer": "^10.4.14",
+    "postcss": "^8.4.24",
+    "postcss-import": "^15.1.0",
+    "postcss-loader": "^7.3.3",
+    "postcss-nested": "^6.0.1",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",
@@ -23,6 +29,7 @@
     "styled-components": "^5.3.9"
   },
   "devDependencies": {
+    "@babel/preset-env": "^7.22.5",
     "@sanity/eslint-config-studio": "^2.0.1",
     "@types/react": "^18.0.25",
     "@types/styled-components": "^5.1.26",

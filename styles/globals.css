@@ -20,6 +20,8 @@
 
 body {
   font-family: 'Poppins', sans-serif;
+  display: grid;
+  grid-template-rows: auto 1fr;
 }
 
 .main {
@@ -28,12 +30,11 @@ body {
   position: fixed;
   display: flex;
   justify-content: center;
-  /* padding: 120px 24px 160px 24px; */
   pointer-events: none;
 }
 
 .app {
-  @apply relative z-10 flex justify-center items-center flex-col max-w-7xl mx-auto sm:px-16 px-6;
+  @apply relative z-10 flex justify-center items-center flex-col;
 }
 
 .rotate-half {

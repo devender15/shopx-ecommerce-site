@@ -101,7 +101,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="w-full sticky top-0 py-4 sm:px-10 md:px-16 px-4 flex items-center justify-between">
+    <nav className="w-full sticky top-0 py-6 sm:px-10 md:px-16 px-4 flex items-center justify-between">
       <Link href="/" className="font-extrabold sm:text-2xl md:text-3xl text-xl">
         ShopX
       </Link>
@@ -110,7 +110,7 @@ export default function Navbar() {
         <ul className="flex items-center justify-center gap-x-4 font-semibold">
           {NAV_ROUTES.map((item) => (
             <li key={item.id}>
-              <Link href={item.path}>{item.name}</Link>
+              <Link href={item.path} className="text-mainGray hover:text-blue-600 transition-colors duration-300">{item.name}</Link>
             </li>
           ))}
         </ul>

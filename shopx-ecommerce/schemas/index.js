@@ -1,1 +1,3 @@
-export const schemaTypes = []
+import featuredPosts from "./featured-posts"
+
+export const schemaTypes = [featuredPosts];
