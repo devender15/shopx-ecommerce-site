@@ -2,6 +2,7 @@
 
 import React, { useState, useEffect } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import BannerImage from "@public/assets/images/banner-1.png";
 import { urlFor } from "@lib/client";
 import { motion as m, AnimatePresence } from "framer-motion";
@@ -9,7 +10,7 @@ import { motion as m, AnimatePresence } from "framer-motion";
 import { AiOutlineRight, AiOutlineLeft } from "react-icons/ai";
 
 const Banner = ({ data }) => {
-  const [currentSlide, setCurrentSlide] = useState(0);
+  const [currentSlide, setCurrentSlide] = useState(Math.floor(Math.random() * data.length));
 
   // useEffect(() => {
   //   const interval = setInterval(() => {
@@ -21,7 +22,7 @@ const Banner = ({ data }) => {
 
   const handleNextSlide = () => {
     setCurrentSlide((prevSlide) => (prevSlide + 1) % data.length);
-  }
+  };
 
   const handlePrevSlide = () => {
     // if we are on the first slide then move to last slide
@@ -30,10 +31,10 @@ const Banner = ({ data }) => {
       return;
     }
     setCurrentSlide((prevSlide) => (prevSlide - 1) % data.length);
-  }
+  };
 
   return (
-    <div className="relative group w-full h-full bg-[#f0e0ff] flex justify-center">
+    <div className="relative overflow-hidden group w-full h-[79%] bg-[#f0e0ff] flex justify-center">
       <div className="w-full sm:px-8 sm:flex-row flex-col lg:px-16 mx-auto flex sm:justify-between justify-around items-center">
         <div className="flex items-center sm:gap-x-6">
           <div onClick={handlePrevSlide}>
@@ -44,7 +45,8 @@ const Banner = ({ data }) => {
               color="gray"
             />
           </div>
-          <div className="flex flex-col sm:items-start items-center gap-y-6">
+          <div className="flex flex-col sm:items-start items-center gap-y-6
+          mt-16 mb-14">
             <m.h2
               initial={{ opacity: 0, y: "20px" }}
               animate={{ opacity: 1, y: 0 }}
@@ -77,8 +79,10 @@ const Banner = ({ data }) => {
               className="relative overflow-hidden uppercase border border-mainGray hover:text-white transition-all duration-500"
               style={{ padding: "19px 50px 21px" }}
             >
-              <span className="absolute inset-0 bg-[#a749ff] transform -translate-x-full transition-transform duration-300 hover:translate-x-0"></span>
-              <span className="relative z-10">Shop Now</span>
+              <Link href={data[currentSlide]?.redirect_url || "/"}>
+                <span className="absolute inset-0 bg-[#a749ff] transform -translate-x-full transition-transform duration-300 hover:translate-x-0"></span>
+                <span className="relative z-10">Shop Now</span>
+              </Link>
             </m.button>
           </div>
         </div>
