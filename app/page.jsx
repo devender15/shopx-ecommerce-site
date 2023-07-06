@@ -5,6 +5,7 @@ import { client } from "@lib/client";
 import Banner from "@components/Banner";
 import { SERVICES } from "@constants";
 import Heading from "@components/Heading";
+import Card from "@components/Card";
 
 export default function Page() {
   const [bannerData, setBannerData] = useState([]);
@@ -18,7 +19,7 @@ export default function Page() {
   }, []);
 
   return (
-    <div className="w-full">
+    <>
       <Banner data={bannerData} />
 
       <div className="px-3 w-full">
@@ -42,9 +43,13 @@ export default function Page() {
 
         <section className="mt-14">
             <Heading text="Daily Deals!" />
+
+            <div className="mt-10">
+              <Card />
+            </div>
         </section>
 
       </div>
-    </div>
+    </>
   );
 }
