@@ -56,5 +56,10 @@ export default {
             title: 'Stock',
             type: 'number',
         },
+        {
+            name: 'badge',
+            title: 'Badge',
+            type: 'string',
+        },
     ]
 }
