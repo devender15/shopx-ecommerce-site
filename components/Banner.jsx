@@ -34,7 +34,7 @@ const Banner = ({ data }) => {
   };
 
   return (
-    <div className="relative overflow-hidden group w-full h-[79%] bg-[#f0e0ff] flex justify-center">
+    <div className="relative overflow-hidden group w-full h-[80%] bg-[#f0e0ff] flex justify-center">
       <div className="w-full sm:px-8 sm:flex-row flex-col lg:px-16 mx-auto flex sm:justify-between justify-around items-center">
         <div className="flex items-center sm:gap-x-6">
           <div onClick={handlePrevSlide}>
