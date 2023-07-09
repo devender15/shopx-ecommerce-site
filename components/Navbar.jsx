@@ -101,7 +101,7 @@ export default function Navbar() {
   };
 
   return (
-    <nav className="w-full bg-white z-50 sticky top-0 py-6 sm:px-10 md:px-16 px-4 flex items-center justify-between">
+    <nav className="w-full bg-white z-10 sticky top-0 py-6 sm:px-10 md:px-16 px-4 flex items-center justify-between">
       <Link href="/" className="font-extrabold sm:text-2xl md:text-3xl text-xl">
         ShopX
       </Link>
