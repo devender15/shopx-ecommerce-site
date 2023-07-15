@@ -5,7 +5,7 @@ import Image from "next/image";
 import { AiOutlineHeart, AiOutlineEye } from "react-icons/ai";
 import { motion as m } from "framer-motion";
 
-export default function Card({ handleOpenProductInfoModal }) {
+export default function Card({ handleOpenProductInfoModal, product }) {
   const [isHovered, setIsHovered] = useState(false);
 
   return (
@@ -15,10 +15,24 @@ export default function Card({ handleOpenProductInfoModal }) {
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className="bg-[#f6f6f6] relative flex flex-col justify-center items-center p-12 cursor-pointer">
-        <div className="absolute top-4 right-4 px-3 py-1 w-fit text-center bg-pink-400 text-white rounded-md text-xs font-semibold">
-          <span>New</span>
-        </div>
-        <Image src="/assets/images/sample.webp" width={300} height={500} />
+        {product?.discount && (
+          <div className="absolute top-4 right-4 px-3 py-1 w-fit text-center bg-pink-400 text-white rounded-md text-xs font-semibold">
+            <span>{product?.discount}%</span>
+          </div>
+        )}
+
+        {product?.isNew && (
+          <div className="absolute top-12 right-4 px-3 py-1 w-fit text-center bg-purple-500 text-white rounded-md text-xs font-semibold">
+            <span>New</span>
+          </div>
+        )}
+
+        <Image
+          src="/assets/images/sample.webp"
+          alt="product"
+          width={200}
+          height={500}
+        />
 
         <div className="absolute w-full bottom-0 overflow-hidden">
           <div className="flex items-center w-full gap-x-[1px]">
@@ -61,8 +75,8 @@ export default function Card({ handleOpenProductInfoModal }) {
       </div>
 
       <div className="pt-6 text-center flex flex-col items-center justify-center gap-y-1">
-        <p className="text-gray-700 text-lg font-semibold">T-shirt</p>
-        <p className="font-semibold text-black text-lg">$35.6</p>
+        <p className="text-gray-700 text-lg font-semibold">{product?.name}</p>
+        <p className="font-semibold text-black text-lg">₹ {product?.price}</p>
       </div>
     </div>
   );

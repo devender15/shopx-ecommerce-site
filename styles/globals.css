@@ -31,3 +31,12 @@ body {
 .rotate-half:hover {
   @apply transform rotate-180;
 }
+
+.hidescroll {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hidescroll::-webkit-scrollbar {
+  display: none;
+}

@@ -3,11 +3,14 @@
 import { useState, useEffect } from "react";
 import { client } from "@lib/client";
 import { SERVICES } from "@constants";
+import { TailSpin } from "react-loader-spinner";
 
-import { Banner, Heading, Card, Modal } from "@components";
+import { Banner, Heading, Modal, CategoriesView } from "@components";
 
 export default function Page() {
   const [bannerData, setBannerData] = useState([]);
+  const [products, setProducts] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
   const [openProductInfoModal, setOpenProductInfoModal] = useState(false);
 
   useEffect(() => {
@@ -15,7 +18,16 @@ export default function Page() {
       const banners = await client.fetch(`*[_type == 'featuredPosts']`);
       setBannerData(banners);
     };
+
+    const fetchProducts = async () => {
+      setIsLoading(true);
+      const products_response = await client.fetch(`*[_type == 'product']`);
+      setIsLoading(false);
+      setProducts(products_response);
+    };
+
     fetchBanners();
+    fetchProducts();
   }, []);
 
   const handleOpenProductInfoModal = () => {
@@ -25,15 +37,14 @@ export default function Page() {
   // disabling the body scroll when modal is open
   useEffect(() => {
     const disableBodyScroll = () => {
-      if(openProductInfoModal) {
+      if (openProductInfoModal) {
         document.body.style.overflow = "hidden";
-      }
-      else {
+      } else {
         document.body.style.overflow = "unset";
       }
-    }
+    };
     disableBodyScroll();
-  }, [openProductInfoModal])
+  }, [openProductInfoModal]);
 
   return (
     <>
@@ -59,7 +70,23 @@ export default function Page() {
           <Heading text="Daily Deals!" />
 
           <div className="mt-10">
-            <Card handleOpenProductInfoModal={handleOpenProductInfoModal} />
+            {/* <Card handleOpenProductInfoModal={handleOpenProductInfoModal} /> */}
+            {isLoading ? (
+              <div className="flex justify-center items-center">
+                <TailSpin
+                  height="80"
+                  width="80"
+                  color="#4fa94d"
+                  ariaLabel="tail-spin-loading"
+                  radius="1"
+                  wrapperStyle={{}}
+                  wrapperClass=""
+                  visible={true}
+                />
+              </div>
+            ) : (
+              <CategoriesView products={products} />
+            )}
           </div>
         </section>
       </div>

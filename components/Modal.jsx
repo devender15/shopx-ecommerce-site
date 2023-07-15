@@ -4,17 +4,19 @@ import { useState } from "react";
 import { FiX } from "react-icons/fi";
 import { motion as m, AnimatePresence } from "framer-motion";
 import Image from "next/image";
+import { PRODUCT_PREVIEW_VARIANTS } from "@animation";
+import { AddToCart } from "@components";
 
 // temp
 const productImages = [
   "/assets/images/t1.jpg",
-  "/assets/images/t2.jpg",
+  "/assets/images/t2.png",
   "/assets/images/t3.jpg",
   "/assets/images/t4.jpg",
   "/assets/images/t5.jpg",
 ];
 
-const Modal = ({ isOpen, onClose, productData }) => {
+export default function Modal({ isOpen, onClose, productData }) {
   const [isClosing, setIsClosing] = useState(false);
   const [mainImage, setMainImage] = useState(productImages[0]);
 
@@ -32,27 +34,11 @@ const Modal = ({ isOpen, onClose, productData }) => {
 
   if (!isOpen) return null;
 
-  const modalVariants = {
-    hidden: {
-      opacity: 0,
-      y: "-100%",
-    },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        type: "spring",
-        damping: 20,
-        stiffness: 100,
-      },
-    },
-  };
-
   return (
     <AnimatePresence>
-      <div className="fixed py-4 top-0 left-0 w-full flex items-center justify-center z-50">
+      <div className="fixed py-4 top-0 left-0 flex items-center justify-center z-50 h-screen w-screen">
         <div
-          className={`fixed top-0 left-0 w-full h-full bg-gray-500 bg-opacity-50 ${
+          className={`fixed top-0 left-0 w-full h-full overflow-x-hidden overflow-y-auto bg-gray-500 bg-opacity-50 ${
             isClosing ? "animate-fade-out" : "animate-fade-in"
           }`}
           onClick={handleClose}
@@ -60,7 +46,7 @@ const Modal = ({ isOpen, onClose, productData }) => {
         <m.div
           initial="hidden"
           animate="visible"
-          variants={modalVariants}
+          variants={PRODUCT_PREVIEW_VARIANTS}
           exit="hidden"
           className="bg-white z-[2] rounded-lg w-[60rem] shadow-lg"
         >
@@ -75,20 +61,27 @@ const Modal = ({ isOpen, onClose, productData }) => {
             </button>
           </div>
 
-          <div className="px-4 py-6 w-full h-full flex items-start gap-x-4">
+          <div className="px-4 py-6 w-full h-full flex items-start flex-col md:flex-row gap-x-0 gap-y-4 md:gap-x-4 md:gap-y-0">
             <div className="basis-[35%]">
               <div className="w-full">
                 <div className="w-full bg-[#f6f6f6]">
-                  <Image src={mainImage} width={300} height={400} />
+                  <Image
+                    src={mainImage}
+                    alt="product"
+                    width={300}
+                    height={400}
+                    className="mx-auto"
+                  />
                 </div>
 
-                <div className="w-full mt-5 overflow-x-auto flex items-center gap-x-4">
+                <div className="w-full mt-5 overflow-x-auto flex items-center gap-x-4 hidescroll">
                   {productImages.map((image, index) => (
                     <Image
                       src={image}
                       key={index}
                       width={85}
                       height={85}
+                      alt="more"
                       onClick={() => handleImageChange(image)}
                       className="cursor-pointer"
                     />
@@ -109,7 +102,7 @@ const Modal = ({ isOpen, onClose, productData }) => {
 
               <hr className="my-6" />
 
-              <div className="flex items-start gap-x-8">
+              <div className="flex flex-col gap-x-0 gap-y-4 md:flex-row items-start md:gap-x-8 md:gap-y-0">
                 <div className="flex flex-col gap-y-4">
                   <h3 className="font-semibold">Color</h3>
 
@@ -140,12 +133,14 @@ const Modal = ({ isOpen, onClose, productData }) => {
                   </div>
                 </div>
               </div>
+
+              <div className="h-16 mt-4">
+                <AddToCart />
+              </div>
             </div>
           </div>
         </m.div>
       </div>
     </AnimatePresence>
   );
-};
-
-export default Modal;
+}
