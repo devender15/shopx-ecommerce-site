@@ -57,9 +57,14 @@ export default {
             type: 'number',
         },
         {
-            name: 'badge',
-            title: 'Badge',
-            type: 'string',
+            name: 'isNew',
+            title: 'New',
+            type: 'boolean',
+        },
+        {
+            name: 'discount',
+            title: 'Discount',
+            type: 'number',
         },
     ]
 }
