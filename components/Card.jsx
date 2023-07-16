@@ -1,38 +1,62 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import Image from "next/image";
 import { AiOutlineHeart, AiOutlineEye } from "react-icons/ai";
 import { motion as m } from "framer-motion";
+import { urlFor } from "@lib/client";
+import Link from "next/link";
 
 export default function Card({ handleOpenProductInfoModal, product }) {
   const [isHovered, setIsHovered] = useState(false);
+  const [imageUrl, setImageUrl] = useState(null);
+
+  // getting main image url from urlFor function
+  useEffect(() => {
+    const convertImageUrl = () => {
+      if (product?.image) {
+        const imageUrl = urlFor(product?.image[0]?.asset?._ref).url();
+        setImageUrl(imageUrl);
+      }
+    };
+    convertImageUrl();
+  }, [product]);
 
   return (
-    <div
+    <m.div
+      layout
       className="p-2 w-fit overflow-hidden flex flex-col justify-center items-center"
       onMouseEnter={() => setIsHovered(true)}
       onMouseLeave={() => setIsHovered(false)}
     >
       <div className="bg-[#f6f6f6] relative flex flex-col justify-center items-center p-12 cursor-pointer">
-        {product?.discount && (
-          <div className="absolute top-4 right-4 px-3 py-1 w-fit text-center bg-pink-400 text-white rounded-md text-xs font-semibold">
-            <span>{product?.discount}%</span>
-          </div>
-        )}
+        <div className="absolute flex flex-col gap-y-2 right-4 top-4">
+          {product?.discount && (
+            <div className="px-3 py-1 w-fit text-center bg-pink-400 text-white rounded-md text-xs font-semibold">
+              <span>{product?.discount}%</span>
+            </div>
+          )}
 
-        {product?.isNew && (
-          <div className="absolute top-12 right-4 px-3 py-1 w-fit text-center bg-purple-500 text-white rounded-md text-xs font-semibold">
-            <span>New</span>
+          {product?.isNew && (
+            <div className="px-3 py-1 w-fit text-center bg-purple-500 text-white rounded-md text-xs font-semibold">
+              <span>New</span>
+            </div>
+          )}
+        </div>
+        
+        <Link href={`product/${product?.slug.current}`}>
+          <div className="w-full h-auto md:h-60 md:w-52 ">
+            {imageUrl && (
+              <Image
+                src={imageUrl}
+                alt="product"
+                width={200}
+                height={500}
+                className="h-full w-full object-cover"
+              />
+            )}
           </div>
-        )}
-
-        <Image
-          src="/assets/images/sample.webp"
-          alt="product"
-          width={200}
-          height={500}
-        />
+        </Link>
 
         <div className="absolute w-full bottom-0 overflow-hidden">
           <div className="flex items-center w-full gap-x-[1px]">
@@ -66,7 +90,7 @@ export default function Card({ handleOpenProductInfoModal, product }) {
                 opacity: isHovered ? 1 : 0,
               }}
               transition={{ duration: 0.3, type: "tween", delay: 0.2 }}
-              onClick={handleOpenProductInfoModal}
+              onClick={() => handleOpenProductInfoModal(product?._id)}
             >
               <AiOutlineEye fontSize={20} color="#fff" />
             </m.button>
@@ -76,8 +100,10 @@ export default function Card({ handleOpenProductInfoModal, product }) {
 
       <div className="pt-6 text-center flex flex-col items-center justify-center gap-y-1">
         <p className="text-gray-700 text-lg font-semibold">{product?.name}</p>
-        <p className="font-semibold text-black text-lg">₹ {product?.price}</p>
+        <p className="font-semibold text-black text-lg">
+          ₹ {product?.price.toLocaleString()}
+        </p>
       </div>
-    </div>
+    </m.div>
   );
 }

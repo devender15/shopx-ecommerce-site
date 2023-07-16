@@ -1,24 +1,32 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { FiX } from "react-icons/fi";
 import { motion as m, AnimatePresence } from "framer-motion";
 import Image from "next/image";
 import { PRODUCT_PREVIEW_VARIANTS } from "@animation";
 import { AddToCart } from "@components";
+import { urlFor } from "@lib/client";
+import { TailSpin } from "react-loader-spinner";
 
-// temp
-const productImages = [
-  "/assets/images/t1.jpg",
-  "/assets/images/t2.png",
-  "/assets/images/t3.jpg",
-  "/assets/images/t4.jpg",
-  "/assets/images/t5.jpg",
-];
 
 export default function Modal({ isOpen, onClose, productData }) {
   const [isClosing, setIsClosing] = useState(false);
-  const [mainImage, setMainImage] = useState(productImages[0]);
+  const [productImages, setProductImages] = useState([]);
+  const [mainImage, setMainImage] = useState(null);
+
+  useEffect(() => {
+    const getImageUrl = () => {
+      if (productData?.image) {
+        const images = productData?.image.map((image) =>
+          urlFor(image?.asset?._ref).url()
+        );
+        setProductImages(images);
+        setMainImage(images[0]);
+      }
+    };
+    getImageUrl();
+  }, [productData]);
 
   const handleClose = () => {
     setIsClosing(true);
@@ -65,39 +73,48 @@ export default function Modal({ isOpen, onClose, productData }) {
             <div className="basis-[35%]">
               <div className="w-full">
                 <div className="w-full bg-[#f6f6f6]">
-                  <Image
-                    src={mainImage}
-                    alt="product"
-                    width={300}
-                    height={400}
-                    className="mx-auto"
-                  />
+                  {mainImage ? (
+                    <div className="h-96 mx-auto w-full">
+                      <Image
+                        src={mainImage}
+                        alt="product"
+                        width={300}
+                        height={400}
+                        className="h-full w-full object-cover"
+                      />
+                    </div>
+                  ) : (
+                    <div className="w-full h-[400px] flex items-center justify-center">
+                      <TailSpin color="#000" height={50} width={50} />
+                    </div>
+                  )}
                 </div>
 
                 <div className="w-full mt-5 overflow-x-auto flex items-center gap-x-4 hidescroll">
-                  {productImages.map((image, index) => (
-                    <Image
-                      src={image}
-                      key={index}
-                      width={85}
-                      height={85}
-                      alt="more"
-                      onClick={() => handleImageChange(image)}
-                      className="cursor-pointer"
-                    />
+                  {productImages?.map((image, index) => (
+                    <div className="h-16 w-16">
+                      <Image
+                        src={image}
+                        key={index}
+                        width={85}
+                        height={85}
+                        alt="more"
+                        onClick={() => handleImageChange(image)}
+                        className="cursor-pointer h-full w-full object-cover"
+                      />
+                    </div>
                   ))}
                 </div>
               </div>
             </div>
 
             <div className="basis-[65%] px-4 h-full flex flex-col gap-y-4">
-              <h1 className="text-2xl font-semibold">Lorem ipsum dolor</h1>
-              <p className="text-xl text-red-500 font-semibold">₹ 10,000</p>
+              <h1 className="text-2xl font-semibold">{productData?.name}</h1>
+              <p className="text-xl text-red-500 font-semibold">
+                ₹ {productData?.price.toLocaleString()}
+              </p>
               <p className="text-base font-medium">
-                Lorem, ipsum dolor sit amet consectetur adipisicing elit. Magnam
-                tempora aliquid optio? Blanditiis et consectetur eaque nam
-                error. Pariatur, veritatis placeat consectetur quibusdam sequi
-                delectus?
+                {productData?.description}
               </p>
 
               <hr className="my-6" />

@@ -12,6 +12,7 @@ export default function Page() {
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [openProductInfoModal, setOpenProductInfoModal] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState({});
 
   useEffect(() => {
     const fetchBanners = async () => {
@@ -30,7 +31,10 @@ export default function Page() {
     fetchProducts();
   }, []);
 
-  const handleOpenProductInfoModal = () => {
+  const handleOpenProductInfoModal = (productId) => {
+    const product = products.find((product) => product._id === productId);
+    setSelectedProduct(product);
+
     setOpenProductInfoModal(true);
   };
 
@@ -70,13 +74,12 @@ export default function Page() {
           <Heading text="Daily Deals!" />
 
           <div className="mt-10">
-            {/* <Card handleOpenProductInfoModal={handleOpenProductInfoModal} /> */}
             {isLoading ? (
               <div className="flex justify-center items-center">
                 <TailSpin
                   height="80"
                   width="80"
-                  color="#4fa94d"
+                  color="gray"
                   ariaLabel="tail-spin-loading"
                   radius="1"
                   wrapperStyle={{}}
@@ -85,14 +88,14 @@ export default function Page() {
                 />
               </div>
             ) : (
-              <CategoriesView products={products} />
+              <CategoriesView products={products} handleOpenProductInfoModal={handleOpenProductInfoModal} />
             )}
           </div>
         </section>
       </div>
       <Modal
         isOpen={openProductInfoModal}
-        productData={[]}
+        productData={selectedProduct}
         onClose={() => setOpenProductInfoModal(false)}
       />
     </>
