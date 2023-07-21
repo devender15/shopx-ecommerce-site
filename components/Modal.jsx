@@ -118,42 +118,7 @@ export default function Modal({ isOpen, onClose, productData }) {
               </p>
 
               <hr className="my-6" />
-
-              <div className="flex flex-col gap-x-0 gap-y-4 md:flex-row items-start md:gap-x-8 md:gap-y-0">
-                <div className="flex flex-col gap-y-4">
-                  <h3 className="font-semibold">Color</h3>
-
-                  <div className="flex items-center gap-x-2">
-                    <div className="w-5 h-5 rounded-full bg-red-500 cursor-pointer hover:ring-2 ring-black transition-all duration-300"></div>
-
-                    <div className="w-5 h-5 rounded-full bg-blue-500 cursor-pointer hover:ring-2 ring-black transition-all duration-300"></div>
-
-                    <div className="w-5 h-5 rounded-full bg-green-500 cursor-pointer hover:ring-2 ring-black transition-all duration-300"></div>
-                  </div>
-                </div>
-
-                <div className="flex flex-col gap-y-4">
-                  <h3 className="font-semibold">Size</h3>
-                  <div className="flex items-center gap-x-2">
-                    <div className="px-1 py-2 text-center bg-gray-200 text-black font-medium text-sm cursor-pointer hover:bg-purple-600 hover:text-white transition-colors duration-300 w-7">
-                      S
-                    </div>
-                    <div className="px-1 py-2 text-center bg-gray-200 text-black font-medium text-sm cursor-pointer hover:bg-purple-600 hover:text-white transition-colors duration-300 w-7">
-                      M
-                    </div>
-                    <div className="px-1 py-2 text-center bg-gray-200 text-black font-medium text-sm cursor-pointer hover:bg-purple-600 hover:text-white transition-colors duration-300 w-7">
-                      L
-                    </div>
-                    <div className="px-1 py-2 text-center bg-gray-200 text-black font-medium text-sm cursor-pointer hover:bg-purple-600 hover:text-white transition-colors duration-300 w-7">
-                      XL
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              <div className="h-16 mt-4">
-                <AddToCart />
-              </div>
+              <AddToCart productData={productData} />
             </div>
           </div>
         </m.div>
