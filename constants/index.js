@@ -58,3 +58,37 @@ export const SERVICES = [
     },
 
 ]
+
+export const PRODUCT_SIZES = [
+    {
+        id: 1,
+        name: 'S',
+    },
+    {
+        id: 2,
+        name: 'M',
+    },
+    {
+        id: 3,
+        name: 'L',
+    },
+    {
+        id: 4,
+        name: 'XL',
+    },
+]
+
+export const PRODUCT_COLORS = [
+    {
+        id: 1,
+        name: 'bg-red-500',
+    },
+    {
+        id: 2,
+        name: 'bg-blue-500',
+    },
+    {
+        id: 3,
+        name: 'bg-green-500',
+    },
+]
