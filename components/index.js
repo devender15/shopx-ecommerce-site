@@ -5,3 +5,5 @@ export { default as Navbar } from "@components/Navbar";
 export { default as Modal } from "@components/Modal";
 export { default as AddToCart } from "@components/AddToCart";
 export { default as CategoriesView } from "@components/CategoriesView";
+export { default as Breadcrumb } from "@components/Breadcrumb";
+export { default as Badge } from "@components/Badge";
