@@ -85,7 +85,7 @@ export default function Modal({ isOpen, onClose, productData }) {
                     </div>
                   ) : (
                     <div className="w-full h-[400px] flex items-center justify-center">
-                      <TailSpin color="#000" height={50} width={50} />
+                      <TailSpin color="gray" height={50} width={50} />
                     </div>
                   )}
                 </div>
@@ -99,6 +99,7 @@ export default function Modal({ isOpen, onClose, productData }) {
                         width={85}
                         height={85}
                         alt="more"
+                        onMouseOver={() => handleImageChange(image)}
                         onClick={() => handleImageChange(image)}
                         className="cursor-pointer h-full w-full object-cover"
                       />
