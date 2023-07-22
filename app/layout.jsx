@@ -2,6 +2,7 @@ import "@styles/globals.css";
 
 import AuthProvider from "@components/AuthProvider";
 import Navbar from "@components/Navbar";
+import Footer from "@components/Footer";
 import { Toaster } from "react-hot-toast";
 import { StateContext } from "@context/StateContext";
 
@@ -21,6 +22,7 @@ const RootLayout = ({ children }) => (
           <Navbar />
           <Toaster position="bottom-left" />
           <main className="app">{children}</main>
+          <Footer />
         </StateContext>
       </AuthProvider>
     </body>
