@@ -2,7 +2,7 @@ import Link from "next/link"
 
 export default function Footer() {
     return (
-        <footer className="bg-[#f6f6f8] flex flex-col items-start md:flex-row md:flex-wrap justify-evenly md:items-center py-32 px-6 lg:px-28">
+        <footer className="bg-[#f6f6f8] flex flex-col items-start gap-y-12 md:flex-row md:flex-wrap justify-evenly md:items-center py-32 px-6 lg:px-28">
             <div className="flex flex-col gap-y-3">
                 <h2 className="text-3xl font-bold">ShopX</h2>
                 <p>© 2023 ShopX.</p>
