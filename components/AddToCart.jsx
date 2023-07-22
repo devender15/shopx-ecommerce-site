@@ -93,9 +93,9 @@ export default function AddToCart({ productData }) {
         </div>
       </div>
 
-      <div className="h-16 mt-4">
+      <div className="h-14 mt-4">
         <div className="h-full flex items-center gap-x-3">
-          <div className="h-full border p-2 flex items-center gap-x-4 text-gray-500">
+          <div className="h-full border p-2 flex items-center gap-x-4 text-gray-500 select-none">
             <BiMinus
               fontSize={15}
               className="cursor-pointer"

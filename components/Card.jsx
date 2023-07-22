@@ -6,6 +6,7 @@ import { AiOutlineHeart, AiOutlineEye } from "react-icons/ai";
 import { motion as m } from "framer-motion";
 import { urlFor } from "@lib/client";
 import Link from "next/link";
+import { Badge } from "@components";
 
 export default function Card({ handleOpenProductInfoModal, product }) {
   const [isHovered, setIsHovered] = useState(false);
@@ -32,18 +33,12 @@ export default function Card({ handleOpenProductInfoModal, product }) {
       <div className="bg-[#f6f6f6] relative flex flex-col justify-center items-center p-12 cursor-pointer">
         <div className="absolute flex flex-col gap-y-2 right-4 top-4">
           {product?.discount && (
-            <div className="px-3 py-1 w-fit text-center bg-pink-400 text-white rounded-md text-xs font-semibold">
-              <span>{product?.discount}%</span>
-            </div>
+            <Badge text={`${product?.discount}%`} type="discount" />
           )}
 
-          {product?.isNew && (
-            <div className="px-3 py-1 w-fit text-center bg-purple-500 text-white rounded-md text-xs font-semibold">
-              <span>New</span>
-            </div>
-          )}
+          {product?.isNew && <Badge text="New" type="new" />}
         </div>
-        
+
         <Link href={`product/${product?.slug.current}`}>
           <div className="w-full h-auto md:h-60 md:w-52 ">
             {imageUrl && (

@@ -70,15 +70,15 @@ export default function Page() {
           ))}
         </section>
 
-        <section className="mt-14">
+        <section className="my-14">
           <Heading text="Daily Deals!" />
 
           <div className="mt-10">
             {isLoading ? (
               <div className="flex justify-center items-center">
                 <TailSpin
-                  height="80"
-                  width="80"
+                  height="50"
+                  width="50"
                   color="gray"
                   ariaLabel="tail-spin-loading"
                   radius="1"
