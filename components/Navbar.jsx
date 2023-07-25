@@ -2,6 +2,8 @@
 
 import Link from "next/link";
 import { useState } from "react";
+import { useStateContext } from "@context/StateContext";
+import { Counter } from "@components";
 
 import { NAV_ROUTES } from "@constants";
 
@@ -18,6 +20,8 @@ import { IoIosCall } from "react-icons/io";
 import { GrMail } from "react-icons/gr";
 
 function Sidebar({ showSidebar, toggleSidebar }) {
+  const { totalQuantities } = useStateContext();
+
   return (
     <div
       id="sidebar"
@@ -95,6 +99,8 @@ function Sidebar({ showSidebar, toggleSidebar }) {
 
 export default function Navbar() {
   const [showSidebar, setShowSidebar] = useState(false);
+  const { totalQuantities, wishlist } = useStateContext();
+
 
   const handleToggleSidebar = () => {
     setShowSidebar((prev) => !prev);
@@ -110,7 +116,12 @@ export default function Navbar() {
         <ul className="flex items-center justify-center gap-x-4 font-semibold">
           {NAV_ROUTES.map((item) => (
             <li key={item.id}>
-              <Link href={item.path} className="text-mainGray hover:text-blue-600 transition-colors duration-300">{item.name}</Link>
+              <Link
+                href={item.path}
+                className="text-mainGray hover:text-blue-600 transition-colors duration-300"
+              >
+                {item.name}
+              </Link>
             </li>
           ))}
         </ul>
@@ -118,17 +129,19 @@ export default function Navbar() {
 
       <div>
         <ul className="flex items-center justify-center gap-x-4">
-          <li className="sm:block hidden cursor-pointer">
+          <li className="md:block hidden cursor-pointer">
             <AiOutlineSearch fontSize={25} title="Search" />
           </li>
-          <li className="sm:block hidden cursor-pointer">
+          <li className="md:block hidden cursor-pointer">
             <AiOutlineUser fontSize={25} title="Profile" />
           </li>
-          <li className="cursor-pointer">
+          <li className="cursor-pointer relative">
             <AiOutlineHeart fontSize={25} title="Wishlist" />
+            <Counter value={wishlist.length} />
           </li>
-          <li className="cursor-pointer">
+          <li className="cursor-pointer relative">
             <AiOutlineShopping fontSize={25} title="Shopping Bag" />
+            <Counter value={totalQuantities} />
           </li>
           <li
             className="cursor-pointer sm:hidden block"
