@@ -7,10 +7,12 @@ import { motion as m } from "framer-motion";
 import { urlFor } from "@lib/client";
 import Link from "next/link";
 import { Badge } from "@components";
+import { useStateContext } from "@context/StateContext";
 
 export default function Card({ handleOpenProductInfoModal, product }) {
   const [isHovered, setIsHovered] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
+  const { addToWishlist } = useStateContext();
 
   // getting main image url from urlFor function
   useEffect(() => {
@@ -63,6 +65,7 @@ export default function Card({ handleOpenProductInfoModal, product }) {
                 opacity: isHovered ? 1 : 0,
               }}
               transition={{ duration: 0.3, type: "tween" }}
+              onClick={() => addToWishlist(product)}
             >
               <AiOutlineHeart fontSize={20} color="#fff" />
             </m.button>

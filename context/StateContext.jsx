@@ -9,6 +9,7 @@ export const StateContext = ({ children }) => {
   const [cart, setCart] = useState([]);
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalQuantities, setTotalQuantities] = useState(0);
+  const [wishlist, setWishlist] = useState([]);
 
   // functions
   const addToCart = (product, otherDetails) => {
@@ -25,7 +26,7 @@ export const StateContext = ({ children }) => {
     if (checkProductInCart) {
       const updatedCartItems = cart.map((item) => {
         if (item._id === product._id) {
-          return { ...item, quantity: item.quantity + Math.abs(item.quantity - quantity), size: size, color: color };
+          return { ...item, quantity: item.quantity + quantity, size: size, color: color };
         }
       });
 
@@ -42,6 +43,21 @@ export const StateContext = ({ children }) => {
     toast.success(`${product.name} added to cart`);
   };
 
+  const removeQuantity = (product) => {
+    const updatedCartItems = cart.map(item => {
+      if(item._id === product._id) {
+        return { ...item, quantity: item.quantity - 1 };
+      }
+    })
+
+    setCart(updatedCartItems);
+    setTotalQuantities(prev => prev - 1);
+    setTotalPrice(prev => prev - product.price);
+
+    // toast notification
+    toast.error("Removed!");
+  }
+
   const removeFromCart = (product) => {
     const foundProduct = cart.find((item) => item._id === product._id);
     const updatedCartItems = cart.filter((item) => item._id !== product._id);
@@ -54,6 +70,18 @@ export const StateContext = ({ children }) => {
     toast.error(`${product.name} removed from cart`);
   };
 
+  const addToWishlist = (product) => {
+    setWishlist([...wishlist, { ...product }]);
+    toast.success(`Added to wishlist 💓`); 
+  }
+
+  const removeFromWishlist = (product) => {
+    const updatedWishlist = wishlist.filter(item => item._id !== product._id);
+    setWishlist(updatedWishlist);
+
+    toast.error("Removed from wishlist!");
+  }
+
   return (
     <Context.Provider
       value={{
@@ -63,6 +91,10 @@ export const StateContext = ({ children }) => {
         totalQuantities,
         addToCart,
         removeFromCart,
+        addToWishlist,
+        removeQuantity,
+        wishlist,
+        removeFromWishlist,
       }}
     >
       {children}
