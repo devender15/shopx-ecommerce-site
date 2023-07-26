@@ -41,7 +41,7 @@ export default function Card({ handleOpenProductInfoModal, product }) {
           {product?.isNew && <Badge text="New" type="new" />}
         </div>
 
-        <Link href={`product/${product?.slug.current}`}>
+        <Link href={`/product/${product?.slug.current}`}>
           <div className="w-full h-auto md:h-60 md:w-52 ">
             {imageUrl && (
               <Image
