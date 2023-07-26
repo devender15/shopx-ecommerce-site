@@ -11,18 +11,18 @@ export const NAV_ROUTES = [
     },
     {
         id: 2,
-        name: 'Shop',
-        path: '/',
+        name: 'Men',
+        path: '/category/men',
     },
     {
         id: 3,
-        name: 'Collection',
-        path: '/',
+        name: 'Women',
+        path: '/category/women',
     },
     {
         id: 4,
-        name: 'Pages',
-        path: '/',
+        name: 'Kids',
+        path: '/category/kids',
     },
     {
         id: 5,
