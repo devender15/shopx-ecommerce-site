@@ -1,33 +1,41 @@
 import { AiOutlineClockCircle, AiOutlineDollarCircle } from "react-icons/ai";
 import { FaTruckMoving } from "react-icons/fa";
 import { TbDiscount2 } from "react-icons/tb";
-
+import { CATEGORIES } from "./categories";
 
 export const NAV_ROUTES = [
     {   
         id: 1,
         name: 'Home',
         path: '/',
+        isDropdown: false,
     },
     {
         id: 2,
         name: 'Men',
         path: '/category/men',
+        isDropdown: true,
+        categories: CATEGORIES["Men"],
     },
     {
         id: 3,
         name: 'Women',
         path: '/category/women',
+        isDropdown: true,
+        categories: CATEGORIES["Men"],
     },
     {
         id: 4,
         name: 'Kids',
         path: '/category/kids',
+        isDropdown: true,
+        categories: CATEGORIES["Men"],
     },
     {
         id: 5,
         name: 'Contact Us',
         path: '/',
+        isDropdown: false,
     },
 ]
 
