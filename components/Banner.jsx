@@ -10,15 +10,9 @@ import { motion as m, AnimatePresence } from "framer-motion";
 import { AiOutlineRight, AiOutlineLeft } from "react-icons/ai";
 
 const Banner = ({ data }) => {
-  const [currentSlide, setCurrentSlide] = useState(Math.floor(Math.random() * data.length));
-
-  // useEffect(() => {
-  //   const interval = setInterval(() => {
-  //     setCurrentSlide((prevSlide) => (prevSlide + 1) % slides.length);
-  //   }, 5000);
-
-  //   return () => clearInterval(interval);
-  // }, [slides.length]);
+  const [currentSlide, setCurrentSlide] = useState(
+    Math.floor(Math.random() * data.length)
+  );
 
   const handleNextSlide = () => {
     setCurrentSlide((prevSlide) => (prevSlide + 1) % data.length);
@@ -45,8 +39,10 @@ const Banner = ({ data }) => {
               color="gray"
             />
           </div>
-          <div className="flex flex-col sm:items-start items-center gap-y-6
-          mt-16 mb-14">
+          <div
+            className="flex flex-col sm:items-start items-center gap-y-6
+          mt-16 mb-14"
+          >
             <m.h2
               initial={{ opacity: 0, y: "20px" }}
               animate={{ opacity: 1, y: 0 }}
@@ -84,6 +80,13 @@ const Banner = ({ data }) => {
                 <span className="relative z-10">Shop Now</span>
               </Link>
             </m.button>
+{/* 
+<button
+      className="relative group overflow-hidden outline-none focus:outline-none border border-transparent hover:bg-purple-600 animate-fill-from-left"
+    >
+      <span className="relative z-10">Shop now</span>
+      <span className="absolute inset-0 bg-purple-600 opacity-0 group-hover:opacity-100 animation-fill-from-left duration-300"></span>
+    </button> */}
           </div>
         </div>
 
