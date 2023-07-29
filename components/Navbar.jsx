@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState } from "react";
 import { useStateContext } from "@context/StateContext";
-import { Counter } from "@components";
+import { Counter, NavButton } from "@components";
 
 import { NAV_ROUTES } from "@constants";
 
@@ -101,7 +101,6 @@ export default function Navbar() {
   const [showSidebar, setShowSidebar] = useState(false);
   const { totalQuantities, wishlist } = useStateContext();
 
-
   const handleToggleSidebar = () => {
     setShowSidebar((prev) => !prev);
   };
@@ -116,12 +115,22 @@ export default function Navbar() {
         <ul className="flex items-center justify-center gap-x-4 font-semibold">
           {NAV_ROUTES.map((item) => (
             <li key={item.id}>
-              <Link
-                href={item.path}
-                className="text-mainGray hover:text-blue-600 transition-colors duration-300"
-              >
-                {item.name}
-              </Link>
+              {item.isDropdown ? (
+                <NavButton
+                  title={item.name}
+                  listItems={item.categories}
+                  imageUrl={
+                    "https://flone.jamstacktemplates.dev/assets/img/slider/single-slide-hm1-2.png"
+                  }
+                />
+              ) : (
+                <Link
+                  href={item.path}
+                  className="text-mainGray hover:text-blue-600 transition-colors duration-300"
+                >
+                  {item.name}
+                </Link>
+              )}
             </li>
           ))}
         </ul>

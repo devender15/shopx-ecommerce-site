@@ -10,3 +10,4 @@ export { default as Badge } from "@components/Badge";
 export { default as Counter } from "@components/Counter";
 export { default as ImageViewer } from "@components/ImageViewer";
 export { default as RelatedProducts } from "@components/RelatedProducts";
+export { default as NavButton } from "@components/NavButton";
