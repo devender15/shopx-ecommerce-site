@@ -13,60 +13,75 @@ export default function NavButton({ title, listItems, imageUrl }) {
 
   const handleHideDropDown = () => {
     setTimeout(() => {
-        setIsDropdownOpen(false);
-    }, 500)
+      setIsDropdownOpen(false);
+    }, 200);
   };
 
   return (
-    <div className="relative">
-      <button
-        className="text-mainGray flex items-center gap-x-1 hover:text-blue-600 transition-colors duration-300"
-        onClick={handleShowDropDown}
-        onMouseOver={handleShowDropDown}
-        onMouseLeave={handleHideDropDown}
-      >
+    <div
+      className="relative"
+      onMouseEnter={handleShowDropDown}
+      // onMouseLeave={handleHideDropDown}
+    >
+      <button className="text-mainGray flex items-center gap-x-1 hover:text-blue-600 transition-colors duration-300">
         {title}
 
         <span>
           <BsChevronDown fontSize={10} />
         </span>
       </button>
-      {isDropdownOpen && (
-        <motion.div
-          initial={{ opacity: 0, y: 10 }}
-          animate={{ opacity: 1, y: 0 }}
-          exit={{ opacity: 0, y: 10 }}
-          onMouseOver={handleShowDropDown}
-          onMouseLeave={handleHideDropDown}
-          className="w-[30rem] min-h-80 absolute top-12 left-0 bg-white p-4 rounded-lg shadow-md z-10 grid grid-cols-3 gap-4"
-        >
-          <div>
-            <h2>Clothing</h2>
-            <ul className="mt-2 space-y-3">
-              {listItems["Clothing"].map((item) => (
-                <li key={item.id}>
-                  <Link href="/" className="text-gray-600 hover:text-blue-600 transition-all duration-500">{item.name}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div>
-            <h2>Shoes</h2>
-            <ul className="mt-2 space-y-3">
-              {listItems["Shoes"].map((item) => (
-                <li key={item.id}>
-                  <Link href="/" className="text-gray-600 hover:text-blue-600 transition-all duration-500">{item.name}</Link>
-                </li>
-              ))}
-            </ul>
-          </div>
-          <div className="col-span-1">
-            <div className="h-40 w-32">
-                <Image src={imageUrl} alt={title} height={20} width={20} className="h-full w-full object-cover" />
+      <div>
+        {isDropdownOpen && (
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            animate={{ opacity: 1, y: 0 }}
+            exit={{ opacity: 0, y: 10 }}
+            className="w-[30rem] min-h-80 absolute top-12 left-0 bg-white p-4 rounded-lg shadow-md z-10 grid grid-cols-3 gap-4"
+          >
+            <div>
+              <h2>Clothing</h2>
+              <ul className="mt-2 space-y-3">
+                {listItems["Clothing"].map((item) => (
+                  <li key={item.id}>
+                    <Link
+                      href={item.path}
+                      className="text-gray-600 hover:text-blue-600 transition-all duration-500"
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
             </div>
-          </div>
-        </motion.div>
-      )}
+            <div>
+              <h2>Shoes</h2>
+              <ul className="mt-2 space-y-3">
+                {listItems["Shoes"].map((item) => (
+                  <li key={item.id}>
+                    <Link
+                      href={item.path}
+                      className="text-gray-600 hover:text-blue-600 transition-all duration-500"
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
+            <div className="col-span-1">
+              <div className="h-40 w-32">
+                <Image
+                  src={imageUrl}
+                  alt="person"
+                  height={20}
+                  width={20}
+                  className="h-full w-full object-cover"
+                />
+              </div>
+            </div>
+          </motion.div>
+        )}
+      </div>
     </div>
   );
 }
