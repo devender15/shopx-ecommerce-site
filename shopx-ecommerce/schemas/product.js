@@ -1,3 +1,7 @@
+import { string } from "joi";
+
+const toLowerCaseResolver = (value) => value.toLowerCase();
+
 export default {
     name: 'product',
     title: 'Product',
@@ -31,6 +35,7 @@ export default {
             name: 'category',
             title: 'Category',
             type: 'string',
+            inputResolver: toLowerCaseResolver,
         },
         {
             name: 'subCategory',
