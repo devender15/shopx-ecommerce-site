@@ -10,6 +10,8 @@ export const StateContext = ({ children }) => {
   const [totalPrice, setTotalPrice] = useState(0);
   const [totalQuantities, setTotalQuantities] = useState(0);
   const [wishlist, setWishlist] = useState([]);
+  const [selectedProduct, setSelectedProduct] = useState({});
+  const [showProductInfoModal, setShowProductInfoModal] = useState(false);
 
   // functions
   const addToCart = (product, otherDetails) => {
@@ -82,6 +84,15 @@ export const StateContext = ({ children }) => {
     toast.error("Removed from wishlist!");
   }
 
+  const handleOpenProductInfoModal = (productsArray, productId) => {
+    const product = productsArray.find(
+      (product) => product._id === productId
+    );
+    setSelectedProduct(product);
+
+    setShowProductInfoModal(true);
+  };
+
   return (
     <Context.Provider
       value={{
@@ -95,6 +106,11 @@ export const StateContext = ({ children }) => {
         removeQuantity,
         wishlist,
         removeFromWishlist,
+        selectedProduct,
+        setSelectedProduct,
+        showProductInfoModal,
+        setShowProductInfoModal,
+        handleOpenProductInfoModal,
       }}
     >
       {children}

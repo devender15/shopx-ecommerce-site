@@ -14,15 +14,15 @@ import { IoExpand } from "react-icons/io5";
 import { urlFor } from "@lib/client";
 import Image from "next/image";
 import { TailSpin } from "react-loader-spinner";
+import { useStateContext } from "@context/StateContext";
 
 export default function Page({ params }) {
+  const { handleOpenProductInfoModal, selectedProduct, setShowProductInfoModal, showProductInfoModal } = useStateContext();
   const [product, setProduct] = useState({});
   const [productImages, setProductImages] = useState([]);
   const [relatedProducts, setRelatedProducts] = useState([]);
-  const [selectedProduct, setSelectedProduct] = useState({});
   const [mainImage, setMainImage] = useState(null);
   const [showImageViewer, setShowImageViewer] = useState(false);
-  const [showProductInfoModal, setShowProductInfoModal] = useState(false);
   const slug = params?.slug;
 
   // disabling the body scroll when modal is open
@@ -79,15 +79,6 @@ export default function Page({ params }) {
 
   const handleCloseImageViewer = () => {
     setShowImageViewer(false);
-  };
-
-  const handleOpenProductInfoModal = (productId) => {
-    const product = relatedProducts.find(
-      (product) => product._id === productId
-    );
-    setSelectedProduct(product);
-
-    setShowProductInfoModal(true);
   };
 
   return (

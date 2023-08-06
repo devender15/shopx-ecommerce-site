@@ -15,6 +15,7 @@ export default function RelatedProducts({
             <Card
               key={product._id}
               product={product}
+              productsArray={relatedProducts}
               handleOpenProductInfoModal={handleOpenProductInfoModal}
             />
           ))}

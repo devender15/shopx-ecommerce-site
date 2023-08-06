@@ -9,7 +9,7 @@ import Link from "next/link";
 import { Badge } from "@components";
 import { useStateContext } from "@context/StateContext";
 
-export default function Card({ handleOpenProductInfoModal, product }) {
+export default function Card({ handleOpenProductInfoModal, product, productsArray }) {
   const [isHovered, setIsHovered] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
   const { addToWishlist } = useStateContext();
@@ -88,7 +88,7 @@ export default function Card({ handleOpenProductInfoModal, product }) {
                 opacity: isHovered ? 1 : 0,
               }}
               transition={{ duration: 0.3, type: "tween", delay: 0.2 }}
-              onClick={() => handleOpenProductInfoModal(product?._id)}
+              onClick={() => handleOpenProductInfoModal(productsArray, product?._id)}
             >
               <AiOutlineEye fontSize={20} color="#fff" />
             </m.button>

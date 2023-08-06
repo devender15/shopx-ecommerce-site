@@ -4,15 +4,15 @@ import { useState, useEffect } from "react";
 import { client } from "@lib/client";
 import { SERVICES } from "@constants";
 import { TailSpin } from "react-loader-spinner";
+import { useStateContext } from "@context/StateContext";
 
 import { Banner, Heading, Modal, CategoriesView } from "@components";
 
 export default function Page() {
+  const { handleOpenProductInfoModal, selectedProduct, setShowProductInfoModal, showProductInfoModal } = useStateContext();
   const [bannerData, setBannerData] = useState([]);
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [openProductInfoModal, setOpenProductInfoModal] = useState(false);
-  const [selectedProduct, setSelectedProduct] = useState({});
 
   useEffect(() => {
     const fetchBanners = async () => {
@@ -31,24 +31,17 @@ export default function Page() {
     fetchProducts();
   }, []);
 
-  const handleOpenProductInfoModal = (productId) => {
-    const product = products.find((product) => product._id === productId);
-    setSelectedProduct(product);
-
-    setOpenProductInfoModal(true);
-  };
-
   // disabling the body scroll when modal is open
   useEffect(() => {
     const disableBodyScroll = () => {
-      if (openProductInfoModal) {
+      if (showProductInfoModal) {
         document.body.style.overflow = "hidden";
       } else {
         document.body.style.overflow = "unset";
       }
     };
     disableBodyScroll();
-  }, [openProductInfoModal]);
+  }, [showProductInfoModal]);
 
   return (
     <>
@@ -94,9 +87,9 @@ export default function Page() {
         </section>
       </div>
       <Modal
-        isOpen={openProductInfoModal}
+        isOpen={showProductInfoModal}
         productData={selectedProduct}
-        onClose={() => setOpenProductInfoModal(false)}
+        onClose={() => setShowProductInfoModal(false)}
       />
     </>
   );

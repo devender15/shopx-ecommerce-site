@@ -3,7 +3,10 @@
 import { Card } from "@components";
 import { useState, useEffect } from "react";
 
-export default function CategoriesView({ products, handleOpenProductInfoModal }) {
+export default function CategoriesView({
+  products,
+  handleOpenProductInfoModal,
+}) {
   const [selectedTab, setSelectedTab] = useState("New Arrivals");
   const [filteredProducts, setFilteredProducts] = useState([]);
 
@@ -65,8 +68,13 @@ export default function CategoriesView({ products, handleOpenProductInfoModal })
       </ul>
 
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-x-4 mt-8">
-        {filteredProducts?.map(product => (
-            <Card key={product._id} product={product} handleOpenProductInfoModal={handleOpenProductInfoModal} />
+        {filteredProducts?.map((product) => (
+          <Card
+            key={product._id}
+            product={product}
+            productsArray={filteredProducts}
+            handleOpenProductInfoModal={handleOpenProductInfoModal}
+          />
         ))}
       </div>
     </div>
