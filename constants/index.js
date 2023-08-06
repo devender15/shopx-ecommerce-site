@@ -22,14 +22,14 @@ export const NAV_ROUTES = [
         name: 'Women',
         path: '/category/women',
         isDropdown: true,
-        categories: CATEGORIES["Men"],
+        categories: CATEGORIES["Women"],
     },
     {
         id: 4,
         name: 'Kids',
         path: '/category/kids',
         isDropdown: true,
-        categories: CATEGORIES["Men"],
+        categories: CATEGORIES["Kids"],
     },
     {
         id: 5,
@@ -98,5 +98,28 @@ export const PRODUCT_COLORS = [
     {
         id: 3,
         name: 'bg-green-500',
+    },
+]
+
+export const SORT_BY = [
+    {
+        id: 1,
+        name: 'Price: Low to High',
+        value: 'low-high',
+    },
+    {
+        id: 2,
+        name: 'Price: High to Low',
+        value: 'high-low',
+    },
+    {
+        id: 3,
+        name: 'Newest',
+        value: 'new',
+    },
+    {
+        id: 4,
+        name: 'Oldest',
+        value: 'old',
     },
 ]
