@@ -1,4 +1,3 @@
-// const withMT = require("@material-tailwind/react/utils/withMT");
 
 /** @type {import('tailwindcss').Config} */
 module.exports = {
@@ -20,6 +19,12 @@ module.exports = {
       backgroundColor: {
         mainGray: "#343538",
       },
+      backgroundSize: {
+        '200': '200% 100%',
+      },
+      animation: {
+        'fill-from-left': 'fillFromLeft 0.3s ease-in-out',
+      }
     },
   },
   plugins: [],

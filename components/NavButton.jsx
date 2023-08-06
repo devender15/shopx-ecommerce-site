@@ -4,28 +4,20 @@ import { BsChevronDown } from "react-icons/bs";
 import Link from "next/link";
 import Image from "next/image";
 
-export default function NavButton({ title, listItems, imageUrl }) {
+export default function NavButton({ title, listItems }) {
   const [isDropdownOpen, setIsDropdownOpen] = useState(false);
 
-  const handleShowDropDown = () => {
-    setIsDropdownOpen(true);
-  };
-
-  const handleHideDropDown = () => {
-    setTimeout(() => {
-      setIsDropdownOpen(false);
-    }, 200);
+  const toggleMenu = () => {
+    setIsDropdownOpen(!isDropdownOpen);
   };
 
   return (
-    <div
-      className="relative"
-      onMouseEnter={handleShowDropDown}
-      // onMouseLeave={handleHideDropDown}
-    >
-      <button className="text-mainGray flex items-center gap-x-1 hover:text-blue-600 transition-colors duration-300">
+    <div className="relative">
+      <button
+        onClick={toggleMenu}
+        className="text-mainGray flex items-center gap-x-1 hover:text-blue-600 transition-colors duration-300"
+      >
         {title}
-
         <span>
           <BsChevronDown fontSize={10} />
         </span>
@@ -68,16 +60,31 @@ export default function NavButton({ title, listItems, imageUrl }) {
                 ))}
               </ul>
             </div>
+            <div>
+              <h2>Accessories</h2>
+              <ul className="mt-2 space-y-3">
+                {listItems["Shoes"].map((item) => (
+                  <li key={item.id}>
+                    <Link
+                      href={item.path}
+                      className="text-gray-600 hover:text-blue-600 transition-all duration-500"
+                    >
+                      {item.name}
+                    </Link>
+                  </li>
+                ))}
+              </ul>
+            </div>
             <div className="col-span-1">
-              <div className="h-40 w-32">
+              <div className="h-full flex justify-center items-center">
                 <Image
-                  src={imageUrl}
-                  alt="person"
-                  height={20}
-                  width={20}
-                  className="h-full w-full object-cover"
+                  src="/assets/images/bag.png"
+                  alt="shopping bag"
+                  height={200}
+                  width={100}
+                  className="object-cover"
                 />
-              </div>
+                </div>
             </div>
           </motion.div>
         )}

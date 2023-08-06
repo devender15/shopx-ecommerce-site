@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300&wght@500&display=swap');
 
 @tailwind base;
 @tailwind components;
@@ -43,4 +43,29 @@ body {
 
 .hidescroll::-webkit-scrollbar {
   display: none;
+}
+
+.animated-btn {
+  @apply block bg-gradient-to-r from-transparent to-transparent bg-200 bg-right-bottom transition-all duration-500 ease-out uppercase border border-mainGray;
+}
+
+.animated-btn:hover {
+  @apply from-[#a749ff] via-[#a749ff] to-transparent bg-left-bottom;
+}
+
+.animated-btn-text {
+  @apply text-center text-black text-lg leading-7 transition-all duration-500 ease-out block;
+}
+
+.animated-btn-text:hover {
+  @apply text-white;
+}
+
+@keyframes fillFromLeft {
+  from {
+    background-position: 100% 0;
+  }
+  to {
+    background-position: 0 0;
+  }
 }

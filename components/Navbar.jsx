@@ -119,9 +119,6 @@ export default function Navbar() {
                 <NavButton
                   title={item.name}
                   listItems={item.categories}
-                  imageUrl={
-                    "https://flone.jamstacktemplates.dev/assets/img/slider/single-slide-hm1-2.png"
-                  }
                 />
               ) : (
                 <Link
