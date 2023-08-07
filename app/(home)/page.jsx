@@ -5,6 +5,7 @@ import { client } from "@lib/client";
 import { SERVICES } from "@constants";
 import { TailSpin } from "react-loader-spinner";
 import { useStateContext } from "@context/StateContext";
+import { useSession } from "next-auth/react";
 
 import { Banner, Heading, Modal, CategoriesView } from "@components";
 
@@ -13,6 +14,10 @@ export default function Page() {
   const [bannerData, setBannerData] = useState([]);
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
+
+  const { data: session } = useSession();
+
+  console.log("session: ", session);
 
   useEffect(() => {
     const fetchBanners = async () => {

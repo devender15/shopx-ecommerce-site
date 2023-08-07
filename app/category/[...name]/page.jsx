@@ -8,7 +8,12 @@ import { TailSpin } from "react-loader-spinner";
 import { useStateContext } from "@context/StateContext";
 
 export default function Page({ params }) {
-  const { handleOpenProductInfoModal, selectedProduct, setShowProductInfoModal, showProductInfoModal } = useStateContext();
+  const {
+    handleOpenProductInfoModal,
+    selectedProduct,
+    setShowProductInfoModal,
+    showProductInfoModal,
+  } = useStateContext();
   const [category, setCategory] = useState("");
   const [subCategory, setSubCategory] = useState("");
   const [products, setProducts] = useState([]);
@@ -47,40 +52,33 @@ export default function Page({ params }) {
             newArr.sort((a, b) => {
               return new Date(b._createdAt) - new Date(a._createdAt);
             });
-            console.log(newArr);
             return newArr;
           });
           break;
         case "high-low":
-          console.log("high-low");
           setProducts((prev) => {
             let newArr = [...prev];
             newArr.sort((a, b) => {
               return b.price - a.price;
             });
-            console.log(newArr);
             return newArr;
           });
           break;
         case "low-high":
-          console.log("low-high");
           setProducts((prev) => {
             let newArr = [...prev];
             newArr.sort((a, b) => {
               return a.price - b.price;
             });
-            console.log(newArr);
             return newArr;
           });
           break;
         case "old":
-          console.log("old");
           setProducts((prev) => {
             let newArr = [...prev];
             newArr.sort((a, b) => {
               return new Date(a._createdAt) - new Date(b._createdAt);
             });
-            console.log(newArr);
             return newArr;
           });
           break;

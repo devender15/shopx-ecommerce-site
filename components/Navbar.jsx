@@ -1,9 +1,11 @@
 "use client";
 
 import Link from "next/link";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useStateContext } from "@context/StateContext";
 import { Counter, NavButton } from "@components";
+
+import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
 import { NAV_ROUTES } from "@constants";
 
@@ -98,8 +100,18 @@ function Sidebar({ showSidebar, toggleSidebar }) {
 }
 
 export default function Navbar() {
+  const { data: session } = useSession();
+
   const [showSidebar, setShowSidebar] = useState(false);
   const { totalQuantities, wishlist } = useStateContext();
+  const [providers, setProviders] = useState(null);
+
+  useEffect(() => {
+    (async () => {
+      const res = await getProviders();
+      setProviders(res);
+    })();
+  }, []);
 
   const handleToggleSidebar = () => {
     setShowSidebar((prev) => !prev);
@@ -116,10 +128,7 @@ export default function Navbar() {
           {NAV_ROUTES.map((item) => (
             <li key={item.id}>
               {item.isDropdown ? (
-                <NavButton
-                  title={item.name}
-                  listItems={item.categories}
-                />
+                <NavButton title={item.name} listItems={item.categories} />
               ) : (
                 <Link
                   href={item.path}
@@ -154,6 +163,21 @@ export default function Navbar() {
             onClick={handleToggleSidebar}
           >
             <GiHamburgerMenu fontSize={25} title="Menu" />
+          </li>
+          <li>
+            {providers &&
+              Object.values(providers).map((provider) => (
+                <button
+                  type="button"
+                  key={provider.name}
+                  onClick={() => {
+                    signIn(provider.id);
+                  }}
+                  className="black_btn"
+                >
+                  Sign in
+                </button>
+              ))}
           </li>
         </ul>
         {showSidebar && (
