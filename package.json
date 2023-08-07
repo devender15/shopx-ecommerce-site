@@ -16,6 +16,7 @@
     "framer-motion": "^10.12.17",
     "groq": "^3.13.0",
     "joi": "^17.9.2",
+    "mongoose": "^7.4.2",
     "next": "^13.4.12",
     "next-auth": "^4.22.1",
     "next-sanity": "^4.3.3",
