@@ -148,7 +148,36 @@ export default function Navbar() {
             <AiOutlineSearch fontSize={25} title="Search" />
           </li>
           <li className="md:block hidden cursor-pointer">
-            <AiOutlineUser fontSize={25} title="Profile" />
+            {/* <AiOutlineUser fontSize={25} title="Profile" /> */}
+            <div className="dropdown inline-block relative">
+              <button>
+                <AiOutlineUser fontSize={25} title="Profile" />
+              </button>
+              <ul className="dropdown-menu w-36 h-fit bg-white border absolute hidden text-black pt-4">
+                {session?.user ? (
+                  <>
+                    <li className="w-full">
+                      <button className="w-full hover:font-semibold">My Account</button>
+                    </li>
+                    <li className="w-full">
+                      <button onClick={signOut} className="w-full hover:font-semibold">Sign Out</button>
+                    </li>
+                  </>
+                ) : (
+                  <li className="w-full text-left">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        signIn("google");
+                      }}
+                      className="w-full p-1 hover:font-semibold"
+                    >
+                      Sign In
+                    </button>
+                  </li>
+                )}
+              </ul>
+            </div>
           </li>
           <li className="cursor-pointer relative">
             <AiOutlineHeart fontSize={25} title="Wishlist" />
@@ -163,21 +192,6 @@ export default function Navbar() {
             onClick={handleToggleSidebar}
           >
             <GiHamburgerMenu fontSize={25} title="Menu" />
-          </li>
-          <li>
-            {providers &&
-              Object.values(providers).map((provider) => (
-                <button
-                  type="button"
-                  key={provider.name}
-                  onClick={() => {
-                    signIn(provider.id);
-                  }}
-                  className="black_btn"
-                >
-                  Sign in
-                </button>
-              ))}
           </li>
         </ul>
         {showSidebar && (
