@@ -26,10 +26,12 @@ export const StateContext = ({ children }) => {
     setTotalQuantities((prev) => prev + quantity);
 
     if (checkProductInCart) {
-      const updatedCartItems = cart.map((item) => {
+      const updatedCartItems = [];
+      cart.forEach((item) => {
         if (item._id === product._id) {
-          return { ...item, quantity: item.quantity + quantity, size: size, color: color };
+          item = { ...item, quantity: item.quantity + quantity, size: size, color: color };
         }
+        updatedCartItems.push(item);
       });
 
       setCart(updatedCartItems);

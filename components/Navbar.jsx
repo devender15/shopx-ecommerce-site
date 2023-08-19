@@ -3,7 +3,7 @@
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { useStateContext } from "@context/StateContext";
-import { Counter, NavButton, Sidebar } from "@components";
+import { Counter, NavButton, Sidebar, RenderCartBody } from "@components";
 
 import { signIn, signOut, useSession, getProviders } from "next-auth/react";
 
@@ -102,8 +102,9 @@ import { GrMail } from "react-icons/gr";
 export default function Navbar() {
   const { data: session } = useSession();
 
-  const { totalQuantities, wishlist } = useStateContext();
+  const { totalQuantities, wishlist, cart, totalPrice, removeFromCart } = useStateContext();
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [sidebarValue, setSidebarValue] = useState("");
 
   useEffect(() => {
     (() => {
@@ -112,9 +113,18 @@ export default function Navbar() {
     })();
   }, [isSidebarOpen]);
 
-  const handleToggleSidebar = () => {
+  // const handleToggleSidebar = () => {
+  // };
+
+  const handleOpenSidebar = (sidebarvalue) => {
+    setSidebarValue(sidebarvalue);
     setIsSidebarOpen((prev) => !prev);
-  };
+  }
+
+  // Sidebar body mapper
+  const SIDEBAR_BODY = {
+    "cart": <RenderCartBody items={cart} totalPrice={totalPrice} removeFromCart={removeFromCart} />
+  }
 
   return (
     <nav className="w-full bg-white z-[11] sticky top-0 py-6 sm:px-10 md:px-16 px-4 flex items-center justify-between">
@@ -190,14 +200,14 @@ export default function Navbar() {
             <Counter value={wishlist.length} />
           </li>
           <li className="relative">
-            <button onClick={handleToggleSidebar}>
+            <button onClick={() => handleOpenSidebar("cart")}>
               <AiOutlineShopping fontSize={25} title="Shopping Bag" />
             </button>
             <Counter value={totalQuantities} />
           </li>
           <li
             className="cursor-pointer sm:hidden block"
-            onClick={handleToggleSidebar}
+            // onClick={}
           >
             <GiHamburgerMenu fontSize={25} title="Menu" />
           </li>
@@ -212,6 +222,7 @@ export default function Navbar() {
       <Sidebar
         isSidebarOpen={isSidebarOpen}
         setIsSidebarOpen={setIsSidebarOpen}
+        body={SIDEBAR_BODY[sidebarValue]}
       />
     </nav>
   );
