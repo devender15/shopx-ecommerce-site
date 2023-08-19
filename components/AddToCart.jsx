@@ -156,7 +156,7 @@ export default function AddToCart({ productData }) {
 
           {alreadyInWishlist ? (
             <button className="ml-4" onClick={handleRemoveFromWishlist}>
-              <AiFillHeart fontSize={20} title="Remove from wishlist" />
+              <AiFillHeart fontSize={20} color="red" title="Remove from wishlist" />
             </button>
           ) : (
             <button className="ml-4" onClick={handleAddToWishlist}>
