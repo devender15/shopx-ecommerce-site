@@ -72,7 +72,7 @@ const Banner = ({ data }) => {
               initial={{ opacity: 0, y: "0" }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ type: "tween", duration: 0.8, delay: 0.8 }}
-              className="relative overflow-hidden uppercase border border-mainGray hover:text-white transition-all duration-500"
+              className="main-animated-btn overflow-hidden uppercase border border-mainGray hover:text-white transition-all duration-500"
               style={{ padding: "19px 50px 21px" }}
             >
               <Link href={data[currentSlide]?.redirect_url || "/"}>
@@ -80,13 +80,6 @@ const Banner = ({ data }) => {
                 <span className="relative z-10">Shop Now</span>
               </Link>
             </m.button>
-{/* 
-<button
-      className="relative group overflow-hidden outline-none focus:outline-none border border-transparent hover:bg-purple-600 animate-fill-from-left"
-    >
-      <span className="relative z-10">Shop now</span>
-      <span className="absolute inset-0 bg-purple-600 opacity-0 group-hover:opacity-100 animation-fill-from-left duration-300"></span>
-    </button> */}
           </div>
         </div>
 

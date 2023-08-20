@@ -69,10 +69,10 @@ export default function RenderCartBody({ items, totalPrice, removeFromCart }) {
           </div>
 
           <div className="flex flex-col gap-y-4 w-full px-4">
-            <button className="border px-6 py-4 font-semibold uppercase border-black">
+            <button className="main-animated-btn hover:text-white border px-6 py-4 font-semibold uppercase border-black">
               View Cart
             </button>
-            <button className="border px-6 py-4 font-semibold uppercase border-black">
+            <button className="main-animated-btn hover:text-white border px-6 py-4 font-semibold uppercase border-black">
               Checkout
             </button>
           </div>

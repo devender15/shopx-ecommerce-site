@@ -61,6 +61,29 @@ body {
   @apply text-white;
 }
 
+.main-animated-btn {
+  position: relative;
+  isolation: isolate;
+}
+
+.main-animated-btn::after {
+  content: '';
+  position: absolute;
+  z-index: -1;
+  background-color: #a749ff;
+  inset: 0;
+
+  scale: 0 1;
+  transform-origin: right;
+  transition: scale 450ms;
+
+}
+
+.main-animated-btn:hover::after, .main-animated-btn:focus-visible::after {
+  transform-origin: left;
+  scale: 1 1;
+}
+
 @keyframes fillFromLeft {
   from {
     background-position: 100% 0;

@@ -145,10 +145,9 @@ export default function AddToCart({ productData }) {
           <div className="h-full">
             <button
               onClick={() => addToCart(productData, itemDetails)}
-              className="h-full group relative overflow-hidden uppercase border border-mainGray group-hover:text-white transition-all duration-500 text-sm lg:text-base"
+              className="h-full main-animated-btn overflow-hidden uppercase border bg-gray-800 hover:text-white transition-all duration-500 text-sm lg:text-base"
             >
-              <span className="absolute inset-0 bg-[#a749ff] transform -translate-x-full transition-transform duration-300 hover:translate-x-0"></span>
-              <span className="relative z-10 h-full flex items-center uppercase font-bold bg-gray-800 text-white px-8 py-3">
+              <span className="h-full flex items-center uppercase font-bold  text-white px-8 py-3">
                 Add To Cart
               </span>
             </button>
