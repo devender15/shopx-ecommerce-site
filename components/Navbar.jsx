@@ -196,8 +196,12 @@ export default function Navbar() {
             </div>
           </li>
           <li className="cursor-pointer relative">
-            <AiOutlineHeart fontSize={25} title="Wishlist" />
-            <Counter value={wishlist.length} />
+            <Link href="/wishlist">
+              <button>
+                <AiOutlineHeart fontSize={25} title="Wishlist" />
+              </button>
+              <Counter value={wishlist.length} />
+            </Link>
           </li>
           <li className="relative">
             <button onClick={() => handleOpenSidebar("cart")}>
