@@ -15,7 +15,6 @@ export const StateContext = ({ children }) => {
 
   // functions
   const addToCart = (product, otherDetails) => {
-
     const { quantity, color, size } = otherDetails;
 
     // checking if the product already exists in the cart
@@ -29,7 +28,12 @@ export const StateContext = ({ children }) => {
       const updatedCartItems = [];
       cart.forEach((item) => {
         if (item._id === product._id) {
-          item = { ...item, quantity: item.quantity + quantity, size: size, color: color };
+          item = {
+            ...item,
+            quantity: item.quantity + quantity,
+            size: size,
+            color: color,
+          };
         }
         updatedCartItems.push(item);
       });
@@ -48,19 +52,19 @@ export const StateContext = ({ children }) => {
   };
 
   const removeQuantity = (product) => {
-    const updatedCartItems = cart.map(item => {
-      if(item._id === product._id) {
+    const updatedCartItems = cart.map((item) => {
+      if (item._id === product._id) {
         return { ...item, quantity: item.quantity - 1 };
       }
-    })
+    });
 
     setCart(updatedCartItems);
-    setTotalQuantities(prev => prev - 1);
-    setTotalPrice(prev => prev - product.price);
+    setTotalQuantities((prev) => prev - 1);
+    setTotalPrice((prev) => prev - product.price);
 
     // toast notification
     toast.error("Removed!");
-  }
+  };
 
   const removeFromCart = (product) => {
     const foundProduct = cart.find((item) => item._id === product._id);
@@ -76,20 +80,24 @@ export const StateContext = ({ children }) => {
 
   const addToWishlist = (product) => {
     setWishlist([...wishlist, { ...product }]);
-    toast.success(`Added to wishlist 💓`); 
-  }
+    toast.success(`Added to wishlist 💓`);
+  };
 
   const removeFromWishlist = (product) => {
-    const updatedWishlist = wishlist.filter(item => item._id !== product._id);
+    const updatedWishlist = wishlist.filter((item) => item._id !== product._id);
     setWishlist(updatedWishlist);
 
     toast.error("Removed from wishlist!");
-  }
+  };
+
+  const clearWishlist = () => {
+    setWishlist([]);
+
+    toast.success("Wishlist cleared!");
+  };
 
   const handleOpenProductInfoModal = (productsArray, productId) => {
-    const product = productsArray.find(
-      (product) => product._id === productId
-    );
+    const product = productsArray.find((product) => product._id === productId);
     setSelectedProduct(product);
 
     setShowProductInfoModal(true);
@@ -113,6 +121,7 @@ export const StateContext = ({ children }) => {
         showProductInfoModal,
         setShowProductInfoModal,
         handleOpenProductInfoModal,
+        clearWishlist,
       }}
     >
       {children}
