@@ -14,3 +14,4 @@ export { default as NavButton } from "@components/NavButton";
 export { default as Dropdown } from "@components/Dropdown";
 export { default as Sidebar } from "@components/Sidebar";
 export { default as RenderCartBody } from "@components/SidebarBody/RenderCartBody";
+export { default as RenderMobileNavigation } from "@components/SidebarBody/RenderMobileNavigation";
