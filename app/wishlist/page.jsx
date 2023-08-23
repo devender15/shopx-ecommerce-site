@@ -23,7 +23,7 @@ export default function Page() {
   return (
     <div className="h-fit w-full">
       <Breadcrumb currentPath={"Wishlist"} />
-      <section className="h-full w-[80%] mx-auto px-6 py-20 flex flex-col items-start gap-y-6">
+      <section className="h-full w-full md:w-[80%] mx-auto px-6 py-20 flex flex-col items-start gap-y-6">
         {wishlist.length > 0 && (
           <h2 className="font-semibold text-xl">Your wishlist items</h2>
         )}
@@ -58,12 +58,15 @@ export default function Page() {
                         {wishlist?.map((item) => (
                           <tr key={item._id} className="font-semibold">
                             <td className="whitespace-nowrap  px-6 py-4 font-medium flex justify-center">
-                              <Image
-                                src={getImageUrl(item)}
-                                width={100}
-                                height={100}
-                                alt="product"
-                              />
+                              <div className="w-32 h-36">
+                                <Image
+                                  src={getImageUrl(item)}
+                                  width={200}
+                                  height={200}
+                                  alt="product"
+                                  className="w-full h-full object-cover"
+                                />
+                              </div>
                             </td>
                             <td className="whitespace-nowrap  px-6 py-4">
                               {item?.name}
@@ -71,12 +74,12 @@ export default function Page() {
                             <td className="whitespace-nowrap  px-6 py-4">
                               ₹ {item?.price.toLocaleString()}
                             </td>
-                            <td className="whitespace-nowrap  px-6 py-4 flex justify-center">
-                              <Link href={`/product/${item.slug.current}`}>
-                                <button className="uppercase block bg-[#a749ff] text-white rounded-[50px] py-[10px] px-[15px] hover:bg-[#333] transition-colors duration-500 ease-in-out">
-                                  Buy Now
-                                </button>
-                              </Link>
+                            <td className="px-6 py-4">
+                                <Link className="w-36 mx-auto block" href={`/product/${item.slug.current}`}>
+                                  <button className="uppercase block bg-[#a749ff] text-white rounded-[50px] py-[10px] px-[15px] hover:bg-[#333] transition-colors duration-500 ease-in-out">
+                                    Buy Now
+                                  </button>
+                                </Link>
                             </td>
                             <td>
                               <button onClick={() => removeFromWishlist(item)}>
@@ -107,7 +110,9 @@ export default function Page() {
         ) : (
           <div className="w-full h-full flex flex-col gap-y-10 justify-center items-center">
             <AiOutlineHeart fontSize={150} />
-            <p className="text-xl font-semibold">No items found in wishlist</p>
+            <p className="text-xl font-semibold text-center">
+              No items found in wishlist
+            </p>
             <button className="px-10 py-3 bg-slate-800 text-white hover:bg-[#a749ff] transition-colors duration-200">
               Add Items
             </button>

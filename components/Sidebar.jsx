@@ -20,7 +20,7 @@ const Sidebar = ({ isSidebarOpen, setIsSidebarOpen, body }) => {
       {isSidebarOpen && (
         <motion.div
           layout
-          className={`fixed top-0 right-0 h-screen bg-white w-1/4 shadow-lg
+          className={`fixed top-0 right-0 h-screen bg-white w-[70%] md:w-1/2 lg:w-1/4 shadow-lg
           }`}
           initial={{ x: "100%" }}
           animate={{ x: "0" }}
