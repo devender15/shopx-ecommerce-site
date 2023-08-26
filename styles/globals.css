@@ -25,7 +25,7 @@ body {
 }
 
 .app {
-  @apply relative z-10 flex justify-center items-center flex-col overflow-hidden;
+  @apply relative flex justify-center items-center flex-col overflow-hidden;
 }
 
 .rotate-half {
