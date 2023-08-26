@@ -74,9 +74,9 @@ export default function Page() {
                             <td className="whitespace-nowrap  px-6 py-4">
                               ₹ {item?.price.toLocaleString()}
                             </td>
-                            <td className="px-6 py-4">
+                            <td className="px-6 py-4 align-middle text-center">
                                 <Link className="w-36 mx-auto block" href={`/product/${item.slug.current}`}>
-                                  <button className="uppercase block bg-[#a749ff] text-white rounded-[50px] py-[10px] px-[15px] hover:bg-[#333] transition-colors duration-500 ease-in-out">
+                                  <button className="uppercase inline-block bg-[#a749ff] text-white rounded-[50px] py-[10px] px-[15px] hover:bg-[#333] transition-colors duration-500 ease-in-out">
                                     Buy Now
                                   </button>
                                 </Link>
