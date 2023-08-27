@@ -68,18 +68,18 @@ const Banner = ({ data }) => {
             >
               {data[currentSlide]?.heading2}
             </m.h1>
-            <m.button
-              initial={{ opacity: 0, y: "0" }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ type: "tween", duration: 0.8, delay: 0.8 }}
-              className="main-animated-btn overflow-hidden uppercase border border-mainGray hover:text-white transition-all duration-500"
-              style={{ padding: "19px 50px 21px" }}
-            >
-              <Link href={data[currentSlide]?.redirect_url || "/"}>
+            <Link href={data[currentSlide]?.redirect_url || "/"}>
+              <m.button
+                initial={{ opacity: 0, y: "0" }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ type: "tween", duration: 0.8, delay: 0.8 }}
+                className="main-animated-btn overflow-hidden uppercase border border-mainGray hover:text-white transition-all duration-500"
+                style={{ padding: "19px 50px 21px" }}
+              >
                 <span className="absolute inset-0 bg-[#a749ff] transform -translate-x-full transition-transform duration-300 hover:translate-x-0"></span>
                 <span className="relative z-10">Shop Now</span>
-              </Link>
-            </m.button>
+              </m.button>
+            </Link>
           </div>
         </div>
 
