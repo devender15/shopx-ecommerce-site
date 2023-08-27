@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { client } from "@lib/client";
-import { Breadcrumb, Dropdown, Card, Modal } from "@components";
+import { Breadcrumb, Dropdown, Card, Modal, CategorySidebar } from "@components";
 import { SORT_BY } from "@constants";
 import { TailSpin } from "react-loader-spinner";
 import { useStateContext } from "@context/StateContext";

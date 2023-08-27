@@ -123,3 +123,89 @@ export const SORT_BY = [
         value: 'old',
     },
 ]
+
+export const CATEGORY_SIDEBAR = {
+    "CATEGORIES": [
+        {
+            id: 1,
+            name: "All Categories",
+            value: "all-categories",
+        },
+        {
+            id: 2,
+            name: "Men",
+            value: "men",
+        },
+        {
+            id: 3,
+            name: "Women",
+            value: "women",
+        },
+        {
+            id: 4,
+            name: "Kids",
+            value: "kids",
+        },
+        {
+            id: 5,
+            name: "Decoration",
+            value: "decoration",
+        },
+        {
+            id: 6,
+            name: "Furniture",
+            value: "furniture",
+        },
+        {
+            id: 7,
+            name: "Accessories",
+            value: "accessories",
+        },
+    ],
+
+    "SIZE": [
+        {
+            id: 1,
+            name: "All Sizes",
+            value: "all-sizes",
+        },
+        {
+            id: 2,
+            name: "S",
+            value: "s",
+        },
+        {
+            id: 3,
+            name: "M",
+            value: "m",
+        },
+        {
+            id: 4,
+            name: "L",
+            value: "l",
+        }
+    ],
+
+    "PRICE": [
+        {
+            id: 1,
+            name: "All Prices",
+            value: "all-prices",
+        },
+        {
+            id: 2,
+            name: "Under ₹1000",
+            value: "<1000",
+        },
+        {
+            id: 3,
+            name: "₹1000 - ₹3000",
+            value: "1000-3000",
+        },
+        {
+            id: 4,
+            name: "Above ₹3000",
+            value: ">3000",
+        },
+    ],
+}
