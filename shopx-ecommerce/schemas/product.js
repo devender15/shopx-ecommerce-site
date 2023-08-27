@@ -43,6 +43,11 @@ export default {
             type: 'string',
         },
         {
+            name: 'size',
+            title: 'Size',
+            type: 'string',
+        },
+        {
             name: 'rating',
             title: 'Rating',
             type: 'number',
