@@ -8,10 +8,12 @@ import {
   Card,
   Modal,
   CategorySidebar,
+  Sidebar,
 } from "@components";
 import { SORT_BY } from "@constants";
 import { TailSpin } from "react-loader-spinner";
 import { useStateContext } from "@context/StateContext";
+import { IoIosOptions } from "react-icons/io";
 
 export default function Page() {
   const {
@@ -21,6 +23,7 @@ export default function Page() {
     showProductInfoModal,
   } = useStateContext();
   const [products, setProducts] = useState([]);
+  const [openFilterSidebar, setFilterSidebar] = useState(false);
   const [filteredProducts, setFilteredProducts] = useState([]);
   const [sortby, setSortby] = useState("high-low");
   const [isFetchingProducts, setIsFetchingProducts] = useState(false);
@@ -31,7 +34,6 @@ export default function Page() {
   });
 
   // useEffects
-
   useEffect(() => {
     const fetchProducts = async () => {
       setIsFetchingProducts(true);
@@ -158,7 +160,7 @@ export default function Page() {
         <Breadcrumb currentPath="Shop" />
 
         <div className="w-full flex items-start">
-          <div className="basis-[20%]">
+          <div className="hidden md:block md:basis-[20%]">
             <CategorySidebar
               selectedCheckboxes={selectedCheckboxes}
               setSelectedCheckboxes={setSelectedCheckboxes}
@@ -166,7 +168,12 @@ export default function Page() {
           </div>
 
           <div className="flex-grow w-[80%]">
-            <div className="w-full flex justify-start md:justify-end px-1 md:px-4 py-2">
+            <div className="w-full flex justify-between md:justify-end px-1 md:px-4 py-2">
+              <button className="md:hidden flex items-center gap-x-2 ml-12" onClick={() => setFilterSidebar(true)}>
+                Filter
+                <IoIosOptions size={25} />
+              </button>
+
               <Dropdown
                 title="Sort By"
                 list={SORT_BY}
@@ -208,6 +215,17 @@ export default function Page() {
         isOpen={showProductInfoModal}
         productData={selectedProduct}
         onClose={() => setShowProductInfoModal(false)}
+      />
+      <Sidebar
+        isSidebarOpen={openFilterSidebar}
+        setIsSidebarOpen={setFilterSidebar}
+        direction="left"
+        body={
+          <CategorySidebar
+            selectedCheckboxes={selectedCheckboxes}
+            setSelectedCheckboxes={setSelectedCheckboxes}
+          />
+        }
       />
     </>
   );

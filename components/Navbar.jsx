@@ -155,6 +155,7 @@ export default function Navbar() {
       <Sidebar
         isSidebarOpen={isSidebarOpen}
         setIsSidebarOpen={setIsSidebarOpen}
+        direction="right"
         body={SIDEBAR_BODY[sidebarValue]}
       />
     </nav>
