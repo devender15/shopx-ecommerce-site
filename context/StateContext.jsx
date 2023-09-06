@@ -79,8 +79,16 @@ export const StateContext = ({ children }) => {
   };
 
   const addToWishlist = (product) => {
-    setWishlist([...wishlist, { ...product }]);
-    toast.success(`Added to wishlist 💓`);
+    // setWishlist([...wishlist, { ...product }]);
+    setWishlist(prev => {
+      // saving the new product only if it doesn't already exist in the wishlist
+      const foundProduct = prev.find(item => item._id === product._id);
+      if (!foundProduct) {
+        toast.success(`Added to wishlist 💓`);
+        return [...prev, { ...product }];
+      }
+      return [...prev];
+    })
   };
 
   const removeFromWishlist = (product) => {

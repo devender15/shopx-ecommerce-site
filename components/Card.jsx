@@ -9,10 +9,14 @@ import Link from "next/link";
 import { Badge } from "@components";
 import { useStateContext } from "@context/StateContext";
 
-export default function Card({ handleOpenProductInfoModal, product, productsArray }) {
+export default function Card({
+  handleOpenProductInfoModal,
+  product,
+  productsArray,
+}) {
   const [isHovered, setIsHovered] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
-  const { addToWishlist } = useStateContext();
+  const { addToWishlist, wishlist, removeFromWishlist } = useStateContext();
 
   // getting main image url from urlFor function
   useEffect(() => {
@@ -24,6 +28,18 @@ export default function Card({ handleOpenProductInfoModal, product, productsArra
     };
     convertImageUrl();
   }, [product]);
+
+  const checkIfExists = (product) => {
+    const checkProductInWishlist = wishlist.find(
+      (item) => item._id === product._id
+    );
+
+    if (checkProductInWishlist) {
+      return true;
+    } else {
+      return false;
+    }
+  };
 
   return (
     <m.div
@@ -58,14 +74,20 @@ export default function Card({ handleOpenProductInfoModal, product, productsArra
         <div className="absolute w-full bottom-0 overflow-hidden">
           <div className="flex items-center w-full gap-x-[1px]">
             <m.button
-              className="p-4 h-14 bg-[#a749ff] basis-[10%] hover:bg-black transition-colors duration-300"
+              className={`p-4 h-14 basis-[10%] hover:bg-black transition-colors duration-300 ${
+                checkIfExists(product) ? "bg-black" : "bg-[#a749ff]"
+              }`}
               initial={{ y: 20, opacity: 0 }}
               animate={{
                 y: isHovered ? 0 : 20,
                 opacity: isHovered ? 1 : 0,
               }}
               transition={{ duration: 0.3, type: "tween" }}
-              onClick={() => addToWishlist(product)}
+              onClick={() =>
+                checkIfExists(product)
+                  ? removeFromWishlist(product)
+                  : addToWishlist(product)
+              }
             >
               <AiOutlineHeart fontSize={20} color="#fff" />
             </m.button>
@@ -88,7 +110,9 @@ export default function Card({ handleOpenProductInfoModal, product, productsArra
                 opacity: isHovered ? 1 : 0,
               }}
               transition={{ duration: 0.3, type: "tween", delay: 0.2 }}
-              onClick={() => handleOpenProductInfoModal(productsArray, product?._id)}
+              onClick={() =>
+                handleOpenProductInfoModal(productsArray, product?._id)
+              }
             >
               <AiOutlineEye fontSize={20} color="#fff" />
             </m.button>
