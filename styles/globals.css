@@ -13,6 +13,7 @@ body {
   font-family: 'Poppins', sans-serif;
   display: grid;
   grid-template-rows: auto 1fr;
+  scrollbar-gutter: stable;
 }
 
 .main {

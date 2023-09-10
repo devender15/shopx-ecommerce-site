@@ -1,7 +1,7 @@
 "use client";
 
 import Link from "next/link";
-import { useState, useEffect } from "react";
+import { useEffect } from "react";
 import { useStateContext } from "@context/StateContext";
 import {
   Counter,
@@ -24,15 +24,20 @@ import {
 } from "react-icons/ai";
 import { GiHamburgerMenu } from "react-icons/gi";
 
-
-
 export default function Navbar() {
   const { data: session } = useSession();
 
-  const { totalQuantities, wishlist, cart, totalPrice, removeFromCart } =
-    useStateContext();
-  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
-  const [sidebarValue, setSidebarValue] = useState("");
+  const {
+    totalQuantities,
+    wishlist,
+    cart,
+    totalPrice,
+    removeFromCart,
+    handleOpenSidebar,
+    sidebarValue,
+    isSidebarOpen,
+    setIsSidebarOpen,
+  } = useStateContext();
 
   useEffect(() => {
     (() => {
@@ -40,11 +45,6 @@ export default function Navbar() {
       document.body.style.overflow = isSidebarOpen ? "hidden" : "auto";
     })();
   }, [isSidebarOpen]);
-
-  const handleOpenSidebar = (sidebarvalue) => {
-    setSidebarValue(sidebarvalue);
-    setIsSidebarOpen((prev) => !prev);
-  };
 
   // Sidebar body mapper
   const SIDEBAR_BODY = {
@@ -56,7 +56,11 @@ export default function Navbar() {
       />
     ),
 
-    mobileNavigation: <RenderMobileNavigation toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)} />,
+    mobileNavigation: (
+      <RenderMobileNavigation
+        toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
+      />
+    ),
   };
 
   return (

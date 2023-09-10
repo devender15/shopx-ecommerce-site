@@ -12,9 +12,21 @@ export const StateContext = ({ children }) => {
   const [wishlist, setWishlist] = useState([]);
   const [selectedProduct, setSelectedProduct] = useState({});
   const [showProductInfoModal, setShowProductInfoModal] = useState(false);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(false);
+  const [sidebarValue, setSidebarValue] = useState("");
 
   // functions
   const addToCart = (product, otherDetails) => {
+
+    // if otherDetails is undefined, set values of quantity, color and size to default
+    if (!otherDetails) {
+      otherDetails = {
+        quantity: 1,
+        color: "Primary",
+        size: "M",
+      };
+    }
+
     const { quantity, color, size } = otherDetails;
 
     // checking if the product already exists in the cart
@@ -111,6 +123,11 @@ export const StateContext = ({ children }) => {
     setShowProductInfoModal(true);
   };
 
+  const handleOpenSidebar = (sidebarvalue) => {
+    setSidebarValue(sidebarvalue);
+    setIsSidebarOpen((prev) => !prev);
+  };
+
   return (
     <Context.Provider
       value={{
@@ -130,6 +147,10 @@ export const StateContext = ({ children }) => {
         setShowProductInfoModal,
         handleOpenProductInfoModal,
         clearWishlist,
+        handleOpenSidebar,
+        isSidebarOpen,
+        sidebarValue,
+        setIsSidebarOpen,
       }}
     >
       {children}

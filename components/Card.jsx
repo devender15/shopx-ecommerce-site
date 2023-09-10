@@ -16,7 +16,7 @@ export default function Card({
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
-  const { addToWishlist, wishlist, removeFromWishlist } = useStateContext();
+  const { addToWishlist, wishlist, removeFromWishlist, addToCart, handleOpenSidebar } = useStateContext();
 
   // getting main image url from urlFor function
   useEffect(() => {
@@ -40,6 +40,11 @@ export default function Card({
       return false;
     }
   };
+
+  const handleBuyNow = (product) => {
+    addToCart(product);
+    handleOpenSidebar("cart")
+  }
 
   return (
     <m.div
@@ -99,6 +104,7 @@ export default function Card({
                 opacity: isHovered ? 1 : 0,
               }}
               transition={{ duration: 0.3, type: "tween", delay: 0.1 }}
+              onClick={() => handleBuyNow(product)}
             >
               <span>Buy Now</span>
             </m.button>
