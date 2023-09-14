@@ -10,7 +10,12 @@ import { useSession } from "next-auth/react";
 import { Banner, Heading, Modal, CategoriesView } from "@components";
 
 export default function Page() {
-  const { handleOpenProductInfoModal, selectedProduct, setShowProductInfoModal, showProductInfoModal } = useStateContext();
+  const {
+    handleOpenProductInfoModal,
+    selectedProduct,
+    setShowProductInfoModal,
+    showProductInfoModal,
+  } = useStateContext();
   const [bannerData, setBannerData] = useState([]);
   const [products, setProducts] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
@@ -86,9 +91,16 @@ export default function Page() {
                 />
               </div>
             ) : (
-              <CategoriesView products={products} handleOpenProductInfoModal={handleOpenProductInfoModal} />
+              <CategoriesView
+                products={products}
+                handleOpenProductInfoModal={handleOpenProductInfoModal}
+              />
             )}
           </div>
+        </section>
+
+        <section className="w-full h-56 md:h-80 lg:h-[50rem] mb-10">
+          <img src={"/assets/images/banner.jpg"} alt="banner" className="w-full h-full object-cover" />
         </section>
       </div>
       <Modal
