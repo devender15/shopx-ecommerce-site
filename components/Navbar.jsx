@@ -73,16 +73,12 @@ export default function Navbar() {
         <ul className="flex items-center justify-center gap-x-4 font-semibold">
           {NAV_ROUTES.map((item) => (
             <li key={item.id}>
-              {item.isDropdown ? (
-                <NavButton title={item.name} listItems={item.categories} />
-              ) : (
-                <Link
-                  href={item.path}
-                  className="text-mainGray hover:text-blue-600 transition-colors duration-300"
-                >
-                  {item.name}
-                </Link>
-              )}
+              <Link
+                href={item.path}
+                className="text-mainGray hover:text-blue-600 transition-colors duration-300"
+              >
+                {item.name}
+              </Link>
             </li>
           ))}
         </ul>
@@ -148,7 +144,6 @@ export default function Navbar() {
           </li>
           <li
             className="sm:hidden block"
-            // onClick={}
           >
             <button onClick={() => handleOpenSidebar("mobileNavigation")}>
               <GiHamburgerMenu fontSize={25} title="Menu" />

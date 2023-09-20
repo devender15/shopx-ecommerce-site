@@ -14,6 +14,7 @@ import { SORT_BY } from "@constants";
 import { TailSpin } from "react-loader-spinner";
 import { useStateContext } from "@context/StateContext";
 import { IoIosOptions } from "react-icons/io";
+import { useSearchParams } from "next/navigation";
 
 export default function Page() {
   const {
@@ -32,6 +33,11 @@ export default function Page() {
     SIZE: "all-sizes",
     PRICE: "all-prices",
   });
+  const searchParams = useSearchParams();
+  // get the query params from the url
+  const categoryName = searchParams.get("cat");
+  const size = searchParams.get("size");
+  const price = searchParams.get("price");
 
   // useEffects
   useEffect(() => {
@@ -39,11 +45,35 @@ export default function Page() {
       setIsFetchingProducts(true);
       const response = await client.fetch(`*[_type == 'product']`);
       setProducts(response);
-      setFilteredProducts(response);
       setIsFetchingProducts(false);
     };
     fetchProducts();
+
+    // set the selected checkboxes state according to the query params
+    setSelectedCheckboxes((prev) => {
+      return {
+        ...prev,
+        CATEGORIES: categoryName ?? "all-categories",
+        SIZE: size ?? "all-sizes",
+        PRICE: price ?? "all-prices",
+      };
+    });
   }, []);
+
+  useEffect(() => {
+    const showUpdatedProducts = () => {
+      // update the filtered products state according to the query params
+      setFilteredProducts(
+        products.filter(
+          (prod) =>
+            checkSelectedCategory(prod.category) &&
+            checkSize(prod.size) &&
+            checkPrice(prod.price)
+        )
+      );
+    };
+    showUpdatedProducts();
+  }, [categoryName, size, price, products]);
 
   useEffect(() => {
     (() => {
@@ -55,24 +85,6 @@ export default function Page() {
             checkPrice(prod.price)
         )
       );
-
-      setFilteredProducts(
-        products.filter(
-          (prod) =>
-            checkSelectedCategory(prod.category) &&
-            checkSize(prod.size) &&
-            checkPrice(prod.price)
-        )
-      );
-
-      setFilteredProducts((prev) => {
-        return prev.filter(
-          (prod) =>
-            checkSelectedCategory(prod.category) &&
-            checkSize(prod.size) &&
-            checkPrice(prod.price)
-        );
-      });
     })();
   }, [selectedCheckboxes]);
 
@@ -169,7 +181,10 @@ export default function Page() {
 
           <div className="flex-grow w-[80%]">
             <div className="w-full flex justify-between md:justify-end px-1 md:px-4 py-2">
-              <button className="md:hidden flex items-center gap-x-2 ml-12" onClick={() => setFilterSidebar(true)}>
+              <button
+                className="md:hidden flex items-center gap-x-2 ml-12"
+                onClick={() => setFilterSidebar(true)}
+              >
                 Filter
                 <IoIosOptions size={25} />
               </button>
