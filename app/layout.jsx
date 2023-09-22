@@ -7,7 +7,7 @@ import { Toaster } from "react-hot-toast";
 import { StateContext } from "@context/StateContext";
 
 export const metadata = {
-  title: "ShopX",
+  title: "ShoppiZone",
   description: "Buy anything from A to Z",
 };
 
