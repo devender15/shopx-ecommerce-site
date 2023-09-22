@@ -9,6 +9,7 @@ import {
   Modal,
   CategorySidebar,
   Sidebar,
+  NoProductFound,
 } from "@components";
 import { SORT_BY } from "@constants";
 import { TailSpin } from "react-loader-spinner";
@@ -48,16 +49,6 @@ export default function Page() {
       setIsFetchingProducts(false);
     };
     fetchProducts();
-
-    // set the selected checkboxes state according to the query params
-    setSelectedCheckboxes((prev) => {
-      return {
-        ...prev,
-        CATEGORIES: categoryName ?? "all-categories",
-        SIZE: size ?? "all-sizes",
-        PRICE: price ?? "all-prices",
-      };
-    });
   }, []);
 
   useEffect(() => {
@@ -72,6 +63,17 @@ export default function Page() {
         )
       );
     };
+
+    // set the selected checkboxes state according to the query params
+    setSelectedCheckboxes((prev) => {
+      return {
+        ...prev,
+        CATEGORIES: categoryName ?? "all-categories",
+        SIZE: size ?? "all-sizes",
+        PRICE: price ?? "all-prices",
+      };
+    });
+
     showUpdatedProducts();
   }, [categoryName, size, price, products]);
 
@@ -211,15 +213,21 @@ export default function Page() {
                   />
                 </div>
               ) : (
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4 py-2">
-                  {filteredProducts.map((product) => (
-                    <Card
-                      key={product._id}
-                      product={product}
-                      productsArray={products}
-                      handleOpenProductInfoModal={handleOpenProductInfoModal}
-                    />
-                  ))}
+                <div className="h-full grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 px-4 py-2">
+                  {filteredProducts.length > 0 ? (
+                    filteredProducts.map((product) => (
+                      <Card
+                        key={product._id}
+                        product={product}
+                        productsArray={products}
+                        handleOpenProductInfoModal={handleOpenProductInfoModal}
+                      />
+                    ))
+                  ) : (
+                    <div className="col-span-3 h-[40rem]">
+                      <NoProductFound />
+                    </div>
+                  )}
                 </div>
               )}
             </section>
