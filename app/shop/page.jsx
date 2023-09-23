@@ -40,16 +40,23 @@ export default function Page() {
   const size = searchParams.get("size");
   const price = searchParams.get("price");
 
+  // getting the search parameter value
+  const searchQuery = searchParams.get("q");
+
   // useEffects
   useEffect(() => {
     const fetchProducts = async () => {
+      const queries = searchQuery
+        ? `*[name match "${searchQuery}*" || subCategory match "${searchQuery}*"]`
+        : `*[_type == 'product']`;
+
       setIsFetchingProducts(true);
-      const response = await client.fetch(`*[_type == 'product']`);
+      const response = await client.fetch(queries);
       setProducts(response);
       setIsFetchingProducts(false);
     };
     fetchProducts();
-  }, []);
+  }, [searchQuery]);
 
   useEffect(() => {
     const showUpdatedProducts = () => {

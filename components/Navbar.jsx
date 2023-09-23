@@ -9,6 +9,7 @@ import {
   Sidebar,
   RenderCartBody,
   RenderMobileNavigation,
+  Searchbox,
 } from "@components";
 
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -66,7 +67,7 @@ export default function Navbar() {
   return (
     <nav className="w-full bg-white z-[10] sticky top-0 py-6 sm:px-10 md:px-16 px-4 flex items-center justify-between">
       <Link href="/" className="font-extrabold sm:text-2xl md:text-3xl text-xl">
-        ShopX
+        ShoppiZone
       </Link>
 
       <div className="sm:block hidden">
@@ -87,7 +88,10 @@ export default function Navbar() {
       <div>
         <ul className="flex items-center justify-center gap-x-4">
           <li className="md:block hidden cursor-pointer">
-            <AiOutlineSearch fontSize={25} title="Search" />
+            <NavButton
+              title={<AiOutlineSearch fontSize={25} title="Search" />}
+              body={<Searchbox />}
+            />
           </li>
           <li className="md:block hidden cursor-pointer">
             {/* <AiOutlineUser fontSize={25} title="Profile" /> */}
@@ -142,9 +146,7 @@ export default function Navbar() {
             </button>
             <Counter value={totalQuantities} />
           </li>
-          <li
-            className="sm:hidden block"
-          >
+          <li className="sm:hidden block">
             <button onClick={() => handleOpenSidebar("mobileNavigation")}>
               <GiHamburgerMenu fontSize={25} title="Menu" />
             </button>
