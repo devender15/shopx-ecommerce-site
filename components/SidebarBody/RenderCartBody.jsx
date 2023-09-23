@@ -3,6 +3,8 @@ import TestImage from "/public/assets/images/t3.jpg";
 import { ImCross } from "react-icons/im";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 import { urlFor } from "@lib/client";
+import getStripe from "@lib/getStripe";
+import Link from "next/link";
 
 export default function RenderCartBody({ items, totalPrice, removeFromCart }) {
   const getImageUrl = (product) => {
@@ -14,12 +16,38 @@ export default function RenderCartBody({ items, totalPrice, removeFromCart }) {
     }
   };
 
+  const handleCheckout = async () => {
+    console.log("Checkout");
+    console.log(items);
+
+    const stripe = await getStripe();
+
+    const response = await fetch("/api/stripe", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ items: items }),
+    });
+
+    if (response.status !== 200) {
+      console.log("Error");
+      return;
+    }
+
+    const data = await response.json();
+
+    await stripe.redirectToCheckout({
+      sessionId: data.id,
+    });
+  };
+
   return (
     <div className="w-full h-full p-2">
       <div className="p-2 w-full flex justify-between items-center">
         <h1 className="text-xl font-semibold">Cart</h1>
         <button>
-            <ImCross fontSize={15} title="Close" />
+          <ImCross fontSize={15} title="Close" />
         </button>
       </div>
       <hr />
@@ -69,10 +97,15 @@ export default function RenderCartBody({ items, totalPrice, removeFromCart }) {
           </div>
 
           <div className="flex flex-col gap-y-4 w-full px-4">
-            <button className="main-animated-btn hover:text-white border px-6 py-4 font-semibold uppercase border-black">
-              View Cart
-            </button>
-            <button className="main-animated-btn hover:text-white border px-6 py-4 font-semibold uppercase border-black">
+            <Link href="/cart" className="w-full">
+              <button className="main-animated-btn w-full hover:text-white border px-6 py-4 font-semibold uppercase border-black">
+                View Cart
+              </button>
+            </Link>
+            <button
+              onClick={handleCheckout}
+              className="main-animated-btn hover:text-white border px-6 py-4 font-semibold uppercase border-black"
+            >
               Checkout
             </button>
           </div>

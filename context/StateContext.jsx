@@ -17,7 +17,6 @@ export const StateContext = ({ children }) => {
 
   // functions
   const addToCart = (product, otherDetails) => {
-
     // if otherDetails is undefined, set values of quantity, color and size to default
     if (!otherDetails) {
       otherDetails = {
@@ -64,6 +63,12 @@ export const StateContext = ({ children }) => {
   };
 
   const removeQuantity = (product) => {
+    // if the quantity is less than 1, remove the product from the cart
+    if (product.quantity < 2) {
+      removeFromCart(product);
+      return;
+    }
+
     const updatedCartItems = cart.map((item) => {
       if (item._id === product._id) {
         return { ...item, quantity: item.quantity - 1 };
@@ -92,15 +97,15 @@ export const StateContext = ({ children }) => {
 
   const addToWishlist = (product) => {
     // setWishlist([...wishlist, { ...product }]);
-    setWishlist(prev => {
+    setWishlist((prev) => {
       // saving the new product only if it doesn't already exist in the wishlist
-      const foundProduct = prev.find(item => item._id === product._id);
+      const foundProduct = prev.find((item) => item._id === product._id);
       if (!foundProduct) {
         toast.success(`Added to wishlist 💓`);
         return [...prev, { ...product }];
       }
       return [...prev];
-    })
+    });
   };
 
   const removeFromWishlist = (product) => {
@@ -109,6 +114,14 @@ export const StateContext = ({ children }) => {
 
     toast.error("Removed from wishlist!");
   };
+
+  const clearCart = () => {
+    setCart([]);
+    setTotalPrice(0);
+    setTotalQuantities(0);
+
+    toast.success("Cart cleared!");
+  }
 
   const clearWishlist = () => {
     setWishlist([]);
@@ -151,6 +164,7 @@ export const StateContext = ({ children }) => {
         isSidebarOpen,
         sidebarValue,
         setIsSidebarOpen,
+        clearCart,
       }}
     >
       {children}
