@@ -20,7 +20,7 @@ export default function Account({ session }) {
             onClick={() => signIn("google")}
             className="text-lg hover:text-blue-800 duration-300 font-semibold"
           >
-            Login
+            Login with Google
           </li>
       )}
     </ul>

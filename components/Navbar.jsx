@@ -1,6 +1,7 @@
 "use client";
 
 import Link from "next/link";
+import Image from "next/image";
 import { useEffect } from "react";
 import { useStateContext } from "@context/StateContext";
 import {
@@ -13,7 +14,7 @@ import {
   Account,
 } from "@components";
 
-import { signIn, signOut, useSession } from "next-auth/react";
+import { useSession } from "next-auth/react";
 
 import { NAV_ROUTES } from "@constants";
 
@@ -96,8 +97,22 @@ export default function Navbar() {
           </li>
           <li className="md:block hidden cursor-pointer">
             <NavButton
-            title={<AiOutlineUser fontSize={25} title="Profile" />}
-            body={<Account session={session} />}
+              title={
+                session?.user ? (
+                  <div className="rounded-full">
+                    <Image
+                      src={session.user.image}
+                      alt="user"
+                      width={20}
+                      height={20}
+                      className="rounded-full"
+                    />
+                  </div>
+                ) : (
+                  <AiOutlineUser fontSize={25} title="Profile" />
+                )
+              }
+              body={<Account session={session} />}
             />
           </li>
           <li className="cursor-pointer relative">
