@@ -5,6 +5,7 @@ import { AiOutlineShoppingCart } from "react-icons/ai";
 import { urlFor } from "@lib/client";
 import getStripe from "@lib/getStripe";
 import Link from "next/link";
+import axios from "axios";
 
 export default function RenderCartBody({ items, totalPrice, removeFromCart }) {
   const getImageUrl = (product) => {
@@ -18,17 +19,12 @@ export default function RenderCartBody({ items, totalPrice, removeFromCart }) {
 
   const handleCheckout = async () => {
     console.log("Checkout");
-    console.log(items);
 
     const stripe = await getStripe();
 
-    const response = await fetch("/api/stripe", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ items: items }),
-    });
+    const response = await axios.post("/api/stripe", {items});
+
+    console.log(response.data);
 
     if (response.status !== 200) {
       console.log("Error");

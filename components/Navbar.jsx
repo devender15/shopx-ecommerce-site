@@ -10,6 +10,7 @@ import {
   RenderCartBody,
   RenderMobileNavigation,
   Searchbox,
+  Account,
 } from "@components";
 
 import { signIn, signOut, useSession } from "next-auth/react";
@@ -94,43 +95,10 @@ export default function Navbar() {
             />
           </li>
           <li className="md:block hidden cursor-pointer">
-            {/* <AiOutlineUser fontSize={25} title="Profile" /> */}
-            <div className="dropdown inline-block relative">
-              <button>
-                <AiOutlineUser fontSize={25} title="Profile" />
-              </button>
-              <ul className="dropdown-menu w-36 h-fit bg-white border absolute hidden text-black pt-4">
-                {session?.user ? (
-                  <>
-                    <li className="w-full">
-                      <button className="w-full hover:font-semibold">
-                        My Account
-                      </button>
-                    </li>
-                    <li className="w-full">
-                      <button
-                        onClick={signOut}
-                        className="w-full hover:font-semibold"
-                      >
-                        Sign Out
-                      </button>
-                    </li>
-                  </>
-                ) : (
-                  <li className="w-full text-left">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        signIn("google");
-                      }}
-                      className="w-full p-1 hover:font-semibold"
-                    >
-                      Sign In
-                    </button>
-                  </li>
-                )}
-              </ul>
-            </div>
+            <NavButton
+            title={<AiOutlineUser fontSize={25} title="Profile" />}
+            body={<Account session={session} />}
+            />
           </li>
           <li className="cursor-pointer relative">
             <Link href="/wishlist">

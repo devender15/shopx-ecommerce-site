@@ -19,3 +19,4 @@ export { default as NoProductFound } from "@components/NoProductFound";
 export { default as RenderCartBody } from "@components/SidebarBody/RenderCartBody";
 export { default as RenderMobileNavigation } from "@components/SidebarBody/RenderMobileNavigation";
 export { default as Searchbox } from "@components/NavDropdownBody/Searchbox";
+export { default as Account } from "@components/NavDropdownBody/Account";

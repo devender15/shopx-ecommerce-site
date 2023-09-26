@@ -17,7 +17,10 @@
   "dependencies": {
     "@sanity/base": "^2.36.1",
     "@sanity/vision": "^3.13.0",
+    "@stripe/react-stripe-js": "^2.3.0",
+    "@stripe/stripe-js": "^2.1.6",
     "autoprefixer": "^10.4.14",
+    "micro": "^10.0.1",
     "postcss": "^8.4.24",
     "postcss-import": "^15.1.0",
     "postcss-loader": "^7.3.3",
@@ -26,6 +29,7 @@
     "react-dom": "^18.2.0",
     "react-is": "^18.2.0",
     "sanity": "^3.13.0",
+    "stripe": "^13.7.0",
     "styled-components": "^5.3.9"
   },
   "devDependencies": {
