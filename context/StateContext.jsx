@@ -2,6 +2,8 @@
 
 import { createContext, useContext, useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
+import { useSession } from "next-auth/react";
+import { client } from "@lib/client";
 
 const Context = createContext();
 
@@ -14,8 +16,108 @@ export const StateContext = ({ children }) => {
   const [showProductInfoModal, setShowProductInfoModal] = useState(false);
   const [isSidebarOpen, setIsSidebarOpen] = useState(false);
   const [sidebarValue, setSidebarValue] = useState("");
+  const { data: session } = useSession();
+
+  // useEffects
+  useEffect(() => {
+    const fetchUserWishlist = async () => {
+      try {
+        const response = await fetch(`/api/wishlist/${session?.user?.id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = await response.json();
+
+        const sanityResponse = await client.fetch(
+          `*[_id in ${JSON.stringify(data[0].wishlist)}]`
+        );
+
+        setWishlist(sanityResponse);
+      } catch (error) {
+        console.log(error);
+        setWishlist([]);
+      }
+    };
+
+    const fetchUserCart = async () => {
+      try {
+        const response = await fetch(`/api/cart/${session?.user?.id}`, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+          },
+        });
+
+        const data = await response.json();
+
+        // getting the product details from the ids in the data
+        const sanityResponse = await client.fetch(
+          `*[_id in ${JSON.stringify(data[0].cart)}]`
+        );
+        setCart(sanityResponse);
+      } catch (error) {
+        console.log(error);
+        setCart([]);
+      }
+    };
+
+    if (session?.user?.id) {
+      fetchUserWishlist();
+      fetchUserCart();
+    }
+  }, [session?.user?.id]);
 
   // functions
+
+  const updateUserWishlist = async (list) => {
+    // create a wishlist array with only the product ids
+    const wishlistIds = [];
+    for (let i = 0; i < list.length; i++) {
+      wishlistIds.push(wishlist[i]?._id);
+    }
+
+    try {
+      await fetch("/api/wishlist", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: session?.user?.id,
+          wishlist: wishlistIds,
+        }),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const updateUserCart = async (list) => {
+    // create a cart array with only the product ids
+    const cartIds = [];
+    for (let i = 0; i < list.length; i++) {
+      cartIds.push(cart[i]?._id);
+    }
+
+    try {
+      await fetch("/api/cart", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          userId: session?.user?.id,
+          cart: cartIds,
+        }),
+      });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   const addToCart = (product, otherDetails) => {
     // if otherDetails is undefined, set values of quantity, color and size to default
     if (!otherDetails) {
@@ -50,12 +152,18 @@ export const StateContext = ({ children }) => {
       });
 
       setCart(updatedCartItems);
+
+      // updating the user's cart in the database
+      updateUserCart(updatedCartItems);
     } else {
       product.quantity = quantity;
       product.color = color;
       product.size = size;
 
       setCart([...cart, { ...product }]);
+
+      // updating the user's cart in the database
+      updateUserCart([...cart, { ...product }]);
     }
 
     // giving a toast notification
@@ -79,6 +187,9 @@ export const StateContext = ({ children }) => {
     setTotalQuantities((prev) => prev - 1);
     setTotalPrice((prev) => prev - product.price);
 
+    // updating the user's cart in the database
+    updateUserCart(updatedCartItems);
+
     // toast notification
     toast.error("Removed!");
   };
@@ -91,6 +202,9 @@ export const StateContext = ({ children }) => {
     setTotalQuantities((prev) => prev - foundProduct.quantity);
     setCart(updatedCartItems);
 
+    // updating the user's cart in the database
+    updateUserCart(updatedCartItems);
+
     // toast notification
     toast.error(`${product.name} removed from cart`);
   };
@@ -102,6 +216,10 @@ export const StateContext = ({ children }) => {
       const foundProduct = prev.find((item) => item._id === product._id);
       if (!foundProduct) {
         toast.success(`Added to wishlist 💓`);
+
+        // updating the user's wishlist in the database
+        updateUserWishlist([...prev, { ...product }]);
+
         return [...prev, { ...product }];
       }
       return [...prev];
@@ -110,6 +228,10 @@ export const StateContext = ({ children }) => {
 
   const removeFromWishlist = (product) => {
     const updatedWishlist = wishlist.filter((item) => item._id !== product._id);
+
+    // updating the user's wishlist in the database
+    updateUserWishlist(updatedWishlist);
+
     setWishlist(updatedWishlist);
 
     toast.error("Removed from wishlist!");
@@ -120,11 +242,17 @@ export const StateContext = ({ children }) => {
     setTotalPrice(0);
     setTotalQuantities(0);
 
+    // updating the user's cart in the database
+    updateUserCart([]);
+
     toast.success("Cart cleared!");
-  }
+  };
 
   const clearWishlist = () => {
     setWishlist([]);
+
+    // updating the user's wishlist in the database
+    updateUserWishlist([]);
 
     toast.success("Wishlist cleared!");
   };

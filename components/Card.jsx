@@ -31,7 +31,7 @@ export default function Card({
 
   const checkIfExists = (product) => {
     const checkProductInWishlist = wishlist.find(
-      (item) => item._id === product._id
+      (item) => item?._id === product?._id
     );
 
     if (checkProductInWishlist) {
