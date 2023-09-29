@@ -76,7 +76,7 @@ export const StateContext = ({ children }) => {
     // create a wishlist array with only the product ids
     const wishlistIds = [];
     for (let i = 0; i < list.length; i++) {
-      wishlistIds.push(wishlist[i]?._id);
+      wishlistIds.push(list[i]?._id);
     }
 
     try {
@@ -99,7 +99,7 @@ export const StateContext = ({ children }) => {
     // create a cart array with only the product ids
     const cartIds = [];
     for (let i = 0; i < list.length; i++) {
-      cartIds.push(cart[i]?._id);
+      cartIds.push(list[i]?._id);
     }
 
     try {
