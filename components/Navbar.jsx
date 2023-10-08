@@ -56,6 +56,7 @@ export default function Navbar() {
         items={cart}
         totalPrice={totalPrice}
         removeFromCart={removeFromCart}
+        toggleSidebar={() => setIsSidebarOpen(!isSidebarOpen)}
       />
     ),
 

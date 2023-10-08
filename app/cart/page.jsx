@@ -5,7 +5,7 @@ import { useStateContext } from "@context/StateContext";
 import { AiOutlineShoppingCart } from "react-icons/ai";
 
 export default function Page() {
-  const { cart, removeFromCart, removeQuantity, addToCart, clearCart } =
+  const { cart, removeFromCart, removeQuantity, addToCart, clearCart, totalPrice, } =
     useStateContext();
 
   const properties = {
@@ -102,7 +102,7 @@ export default function Page() {
             <div className="space-y-6">
               <div className="flex items-center justify-between">
                 <p>Total products</p>
-                <p className="font-semibold">₹ 123</p>
+                <p className="font-semibold">₹ {totalPrice}</p>
               </div>
               <div className="flex items-center justify-between">
                 <p className="text-xl text-[#a749ff] font-semibold">

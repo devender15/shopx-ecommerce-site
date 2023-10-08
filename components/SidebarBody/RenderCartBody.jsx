@@ -7,7 +7,12 @@ import getStripe from "@lib/getStripe";
 import Link from "next/link";
 import axios from "axios";
 
-export default function RenderCartBody({ items, totalPrice, removeFromCart }) {
+export default function RenderCartBody({
+  items,
+  totalPrice,
+  removeFromCart,
+  toggleSidebar,
+}) {
   const getImageUrl = (product) => {
     if (product?.image) {
       const imageUrls = product?.image.map((image) =>
@@ -18,20 +23,17 @@ export default function RenderCartBody({ items, totalPrice, removeFromCart }) {
   };
 
   const handleCheckout = async () => {
-    console.log("Checkout");
-
     const stripe = await getStripe();
 
-    const response = await axios.post("/api/stripe", {items});
+    const response = await axios.post("/api/stripe", { items });
 
-    console.log(response.data);
 
     if (response.status !== 200) {
       console.log("Error");
       return;
     }
 
-    const data = await response.json();
+    const data = await response.data;
 
     await stripe.redirectToCheckout({
       sessionId: data.id,
@@ -42,7 +44,7 @@ export default function RenderCartBody({ items, totalPrice, removeFromCart }) {
     <div className="w-full h-full p-2">
       <div className="p-2 w-full flex justify-between items-center">
         <h1 className="text-xl font-semibold">Cart</h1>
-        <button>
+        <button onClick={toggleSidebar}>
           <ImCross fontSize={15} title="Close" />
         </button>
       </div>
@@ -93,7 +95,14 @@ export default function RenderCartBody({ items, totalPrice, removeFromCart }) {
           </div>
 
           <div className="flex flex-col gap-y-4 w-full px-4">
-            <Link href="/cart" className="w-full">
+            <Link
+              href="/cart"
+              className="w-full"  
+              onClick={() => {
+                toggleSidebar();
+                return false; // to actually go to the link and call the function at the same time
+              }}
+            >
               <button className="main-animated-btn w-full hover:text-white border px-6 py-4 font-semibold uppercase border-black">
                 View Cart
               </button>

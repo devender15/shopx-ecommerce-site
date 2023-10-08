@@ -6,10 +6,15 @@ import { AiOutlineHeart, AiFillHeart } from "react-icons/ai";
 import { useStateContext } from "@context/StateContext";
 import { PRODUCT_SIZES, PRODUCT_COLORS } from "@constants";
 
+import { useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
+
 export default function AddToCart({ productData }) {
   // context
   const { addToCart, addToWishlist, removeFromWishlist, wishlist } =
     useStateContext();
+
+  const { data: session } = useSession();
 
   // states
   const [itemDetails, setItemDetails] = useState({
@@ -77,6 +82,7 @@ export default function AddToCart({ productData }) {
   };
 
   const handleAddToWishlist = () => {
+    if(!session) return signIn("google");
     addToWishlist(productData);
     setAlreadyInWishlist(true);
   };
@@ -144,7 +150,10 @@ export default function AddToCart({ productData }) {
 
           <div className="h-full">
             <button
-              onClick={() => addToCart(productData, itemDetails)}
+              onClick={() => {
+                if (!session) signIn("google");
+                else addToCart(productData, itemDetails);
+              }}
               className="h-full main-animated-btn overflow-hidden uppercase border bg-gray-800 hover:text-white transition-all duration-500 text-sm lg:text-base"
             >
               <span className="h-full flex items-center uppercase font-bold  text-white px-8 py-3">
@@ -155,7 +164,11 @@ export default function AddToCart({ productData }) {
 
           {alreadyInWishlist ? (
             <button className="ml-4" onClick={handleRemoveFromWishlist}>
-              <AiFillHeart fontSize={20} color="red" title="Remove from wishlist" />
+              <AiFillHeart
+                fontSize={20}
+                color="red"
+                title="Remove from wishlist"
+              />
             </button>
           ) : (
             <button className="ml-4" onClick={handleAddToWishlist}>
