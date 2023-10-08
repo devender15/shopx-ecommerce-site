@@ -7,12 +7,7 @@ import getStripe from "@lib/getStripe";
 import Link from "next/link";
 import axios from "axios";
 
-export default function RenderCartBody({
-  items,
-  totalPrice,
-  removeFromCart,
-  toggleSidebar,
-}) {
+export default function RenderCartBody({ items, totalPrice, removeFromCart }) {
   const getImageUrl = (product) => {
     if (product?.image) {
       const imageUrls = product?.image.map((image) =>
@@ -23,17 +18,20 @@ export default function RenderCartBody({
   };
 
   const handleCheckout = async () => {
+    console.log("Checkout");
+
     const stripe = await getStripe();
 
-    const response = await axios.post("/api/stripe", { items });
+    const response = await axios.post("/api/stripe", {items});
 
+    console.log(response.data);
 
     if (response.status !== 200) {
       console.log("Error");
       return;
     }
 
-    const data = await response.data;
+    const data = await response.json();
 
     await stripe.redirectToCheckout({
       sessionId: data.id,
@@ -44,7 +42,7 @@ export default function RenderCartBody({
     <div className="w-full h-full p-2">
       <div className="p-2 w-full flex justify-between items-center">
         <h1 className="text-xl font-semibold">Cart</h1>
-        <button onClick={toggleSidebar}>
+        <button>
           <ImCross fontSize={15} title="Close" />
         </button>
       </div>
@@ -95,14 +93,7 @@ export default function RenderCartBody({
           </div>
 
           <div className="flex flex-col gap-y-4 w-full px-4">
-            <Link
-              href="/cart"
-              className="w-full"  
-              onClick={() => {
-                toggleSidebar();
-                return false; // to actually go to the link and call the function at the same time
-              }}
-            >
+            <Link href="/cart" className="w-full">
               <button className="main-animated-btn w-full hover:text-white border px-6 py-4 font-semibold uppercase border-black">
                 View Cart
               </button>
