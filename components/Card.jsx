@@ -8,6 +8,8 @@ import { urlFor } from "@lib/client";
 import Link from "next/link";
 import { Badge } from "@components";
 import { useStateContext } from "@context/StateContext";
+import { useSession } from "next-auth/react";
+import { signIn } from "next-auth/react";
 
 export default function Card({
   handleOpenProductInfoModal,
@@ -16,7 +18,14 @@ export default function Card({
 }) {
   const [isHovered, setIsHovered] = useState(false);
   const [imageUrl, setImageUrl] = useState(null);
-  const { addToWishlist, wishlist, removeFromWishlist, addToCart, handleOpenSidebar } = useStateContext();
+  const {
+    addToWishlist,
+    wishlist,
+    removeFromWishlist,
+    addToCart,
+    handleOpenSidebar,
+  } = useStateContext();
+  const { data: session } = useSession();
 
   // getting main image url from urlFor function
   useEffect(() => {
@@ -42,9 +51,11 @@ export default function Card({
   };
 
   const handleBuyNow = (product) => {
+    if (!session) return signIn("google");
+
     addToCart(product);
-    handleOpenSidebar("cart")
-  }
+    handleOpenSidebar("cart");
+  };
 
   return (
     <m.div
@@ -88,11 +99,14 @@ export default function Card({
                 opacity: isHovered ? 1 : 0,
               }}
               transition={{ duration: 0.3, type: "tween" }}
-              onClick={() =>
-                checkIfExists(product)
-                  ? removeFromWishlist(product)
-                  : addToWishlist(product)
-              }
+              onClick={() => {
+                if (!session) return signIn("google");
+                else {
+                  checkIfExists(product)
+                    ? removeFromWishlist(product)
+                    : addToWishlist(product);
+                }
+              }}
             >
               <AiOutlineHeart fontSize={20} color="#fff" />
             </m.button>

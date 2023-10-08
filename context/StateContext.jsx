@@ -58,6 +58,18 @@ export const StateContext = ({ children }) => {
           `*[_id in ${JSON.stringify(data[0].cart)}]`
         );
         setCart(sanityResponse);
+
+        // also update the total price and total quantities
+        let totalPrice = 0;
+        let totalQuantities = 0;
+        sanityResponse.forEach((item) => {
+          console.log(item);
+          totalPrice += item.price * item.quantity;
+          totalQuantities += item.quantity;
+        });
+
+        setTotalPrice(totalPrice);
+        setTotalQuantities(totalQuantities);
       } catch (error) {
         console.log(error);
         setCart([]);
