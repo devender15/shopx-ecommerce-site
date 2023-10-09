@@ -89,14 +89,14 @@ export default function Navbar() {
       </div>
 
       <div>
-        <ul className="flex items-center justify-center gap-x-4">
+        <ul className="flex items-start justify-center gap-x-4">
           <li className="md:block hidden cursor-pointer">
             <NavButton
               title={<AiOutlineSearch fontSize={25} title="Search" />}
               body={<Searchbox />}
             />
           </li>
-          <li className="md:block hidden cursor-pointer">
+          <li className="cursor-pointer">
             <NavButton
               title={
                 session?.user ? (

@@ -4,6 +4,7 @@ import { createContext, useContext, useState, useEffect } from "react";
 import { toast } from "react-hot-toast";
 import { useSession } from "next-auth/react";
 import { client } from "@lib/client";
+import axios from "axios";
 
 const Context = createContext();
 
@@ -44,25 +45,16 @@ export const StateContext = ({ children }) => {
 
     const fetchUserCart = async () => {
       try {
-        const response = await fetch(`/api/cart/${session?.user?.id}`, {
-          method: "GET",
-          headers: {
-            "Content-Type": "application/json",
-          },
-        });
+        const response = await axios.get(`/api/cart/${session?.user?.id}`);
 
-        const data = await response.json();
+        const responseItems = response.data[0].cart;
 
-        // getting the product details from the ids in the data
-        const sanityResponse = await client.fetch(
-          `*[_id in ${JSON.stringify(data[0].cart)}]`
-        );
-        setCart(sanityResponse);
+        setCart(responseItems);
 
         // also update the total price and total quantities
         let totalPrice = 0;
         let totalQuantities = 0;
-        sanityResponse.forEach((item) => {
+        responseItems.forEach((item) => {
           console.log(item);
           totalPrice += item.price * item.quantity;
           totalQuantities += item.quantity;
@@ -109,10 +101,10 @@ export const StateContext = ({ children }) => {
 
   const updateUserCart = async (list) => {
     // create a cart array with only the product ids
-    const cartIds = [];
-    for (let i = 0; i < list.length; i++) {
-      cartIds.push(list[i]?._id);
-    }
+    // const cartIds = [];
+    // for (let i = 0; i < list.length; i++) {
+    //   cartIds.push(list[i]?._id);
+    // }
 
     try {
       await fetch("/api/cart", {
@@ -122,7 +114,7 @@ export const StateContext = ({ children }) => {
         },
         body: JSON.stringify({
           userId: session?.user?.id,
-          cart: cartIds,
+          cart: list,
         }),
       });
     } catch (error) {

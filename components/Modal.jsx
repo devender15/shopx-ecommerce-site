@@ -44,7 +44,7 @@ export default function Modal({ isOpen, onClose, productData }) {
 
   return (
     <AnimatePresence>
-      <div className="fixed py-4 top-0 left-0 flex items-center justify-center z-50 h-full md:h-screen w-screen">
+      <div className="overflow-y-auto fixed py-4 top-0 left-0 flex items-center justify-center z-50 h-full md:h-screen w-screen">
         <div
           className={`fixed top-0 left-0 w-full h-full overflow-x-hidden overflow-y-auto bg-gray-500 bg-opacity-50 ${
             isClosing ? "animate-fade-out" : "animate-fade-in"

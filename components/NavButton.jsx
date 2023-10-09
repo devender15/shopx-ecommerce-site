@@ -12,7 +12,7 @@ export default function NavButton({ title, body }) {
     <div className="relative">
       <button
         onClick={toggleMenu}
-        className="text-mainGray flex items-center gap-x-1d hover:text-blue-600 transition-colors duration-300"
+        className="flex items-center gap-x-1d hover:text-blue-600 transition-colors duration-300"
       >
         {title}
       </button>

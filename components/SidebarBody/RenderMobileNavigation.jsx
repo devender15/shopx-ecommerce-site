@@ -1,13 +1,9 @@
 import { GrClose } from "react-icons/gr";
 import { IoIosCall } from "react-icons/io";
 import { GrMail } from "react-icons/gr";
-import {
-    AiOutlineSearch,
-  } from "react-icons/ai";
+import { AiOutlineSearch } from "react-icons/ai";
 import { NAV_ROUTES } from "@constants";
 import Link from "next/link";
-
-
 
 export default function RenderMobileNavigation({ toggleSidebar }) {
   return (
@@ -50,6 +46,10 @@ export default function RenderMobileNavigation({ toggleSidebar }) {
             <li key={item.id}>
               <Link
                 href={item.path}
+                onClick={() => {
+                  toggleSidebar();
+                  return false;
+                }}
                 className="uppercase font-bold transition-colors duration-300 hover:text-blue-600"
               >
                 {item.name}
