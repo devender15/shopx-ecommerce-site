@@ -49,8 +49,8 @@ export const POST = async (req, res) => {
           };
         }),
         mode: "payment",
-        success_url: `https://shoppizone.vercel.app/?success=true`,
-        cancel_url: `https://shoppizone.vercel.app/?success=false`,
+        success_url: `https://shoppizone.vercel.app/success`,
+        cancel_url: `https://shoppizone.vercel.app/?canceled=true`,
       };
 
       const session = await stripe.checkout.sessions.create(params);
