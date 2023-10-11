@@ -31,12 +31,12 @@ export const NAV_ROUTES = [
         isDropdown: true,
         categories: CATEGORIES["Kids"],
     },
-    {
-        id: 5,
-        name: 'Contact Us',
-        path: '/',
-        isDropdown: false,
-    },
+    // {
+    //     id: 5,
+    //     name: 'Contact Us',
+    //     path: '/',
+    //     isDropdown: false,
+    // },
 ]
 
 export const SERVICES = [

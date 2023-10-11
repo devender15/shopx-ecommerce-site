@@ -7,11 +7,6 @@ export default function Account({ session }) {
   return (
     <ul className="w-[14rem] space-y-2">
       {session?.user ? (
-        <>
-          <li className="p-2 text-lg text-gray-600 w-full flex items-center justify-between hover:shadow-md duration-300 font-semibold">
-            <MdOutlineAccountCircle size={25} title="Account" />
-            <span>My account</span>
-          </li>
           <li
             className="p-2 text-lg text-gray-600 w-full flex items-center justify-between hover:shadow-md duration-300 font-semibold"
             onClick={() => signOut()}
@@ -19,7 +14,6 @@ export default function Account({ session }) {
             <AiOutlineLogout size={25} title="Logout" />
             <span>Logout</span>
           </li>
-        </>
       ) : (
         <li
           onClick={() => signIn("google")}
